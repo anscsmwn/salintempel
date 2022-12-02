@@ -1,11 +1,14 @@
 import express from 'express';
 import cors from 'cors';
 import db from './connection/db';
-
+import salinTempelRoute from './routes/salinTemple';
 const PORT = 3000;
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+app.use('/api/salin-tempel', salinTempelRoute);
 app.use(
   cors({
     origin: '*',
@@ -33,7 +36,6 @@ app.use((req, res) => {
   });
 });
 
-app.use(express.json());
 db.once('open', () => {
   app.listen(process.env.PORT || PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
