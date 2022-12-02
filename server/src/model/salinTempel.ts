@@ -15,6 +15,10 @@ const salinTempelSchema = new Schema({
     unique: true,
   },
   like: { type: Number, default: 0 },
+  author: {
+    type: String,
+    default: 'anonymous',
+  },
 });
 
 const SalinTempel = mongoose.model('SalinTempel', salinTempelSchema);
