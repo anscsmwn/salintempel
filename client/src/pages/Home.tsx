@@ -12,6 +12,17 @@ const Home = () => {
         </Link>
         <h1 className="text-2xl font-bold">SalinTempel</h1>
       </div>
+      <section className="mt-10">
+        {data?.data.map((salinTempel) => (
+          <article
+            key={salinTempel._id}
+            className="border border-black p-5 rounded-md"
+          >
+            <h2 className="text-2xl font-semibold mb-4">{salinTempel.title}</h2>
+            <p>{salinTempel.content}</p>
+          </article>
+        ))}
+      </section>
     </Layout>
   );
 };
