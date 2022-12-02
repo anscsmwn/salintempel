@@ -9,11 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/salin-tempel', salinTempelRoute);
-app.use(
-  cors({
-    origin: '*',
-  }),
-);
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.status(200).json({
