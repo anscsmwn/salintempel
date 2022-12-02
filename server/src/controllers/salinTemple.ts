@@ -41,3 +41,22 @@ export const getRandomSalinTempel = async (req: Request, res: Response) => {
     data: results[random],
   });
 };
+
+export const deleteSalinTempel = async (req: Request, res: Response) => {
+  try {
+    const result = await SalinTempel.findByIdAndDelete(req.params.id);
+    res.status(200).json({
+      status: 'success',
+      end_point: req.originalUrl,
+      method: req.method,
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      end_point: req.originalUrl,
+      method: req.method,
+      message: 'Failed to delete salin tempel.',
+    });
+  }
+};
