@@ -1,15 +1,20 @@
-import express from 'express';
 import cors from 'cors';
+import express from 'express';
 import db from './connection/db';
 import salinTempelRoute from './routes/salinTemple';
+
 const PORT = 3000;
 
 const app = express();
+app.use(
+  cors({
+    origin: '*',
+  }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/salin-tempel', salinTempelRoute);
-app.use(cors());
 
 app.get('/', (req, res) => {
   res.status(200).json({
