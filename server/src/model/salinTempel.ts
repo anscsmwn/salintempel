@@ -17,7 +17,7 @@ const salinTempelSchema = new Schema({
   like: { type: Number, default: 0 },
   author: {
     type: String,
-    default: 'anonymous',
+    default: 'Anonymous',
   },
 });
 
