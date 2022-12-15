@@ -12,7 +12,7 @@ const Home = () => {
   const { logOut, user } = UserAuth();
   if (isLoading)
     return (
-      <AiOutlineLoading3Quarters className="animate-spin text-4xl mx-auto text-slate-700 text-center mt-10" />
+      <AiOutlineLoading3Quarters className="animate-spin text-4xl mx-auto text-slate-700 text-center pt-10" />
     );
 
   const formattedName = (name: string) => {
