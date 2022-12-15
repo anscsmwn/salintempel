@@ -41,20 +41,24 @@ const Home = () => {
             }}
             // @ts-ignore
             hasMore={hasNextPage}
-            loader={<p className="text-center text-black">Loading...</p>}
+            loader={
+              <p className="text-center text-black text-sx pb-4">Loading...</p>
+            }
             endMessage={
               <p className="py-5" style={{ textAlign: 'center' }}>
                 <b>Yay! You have seen it all</b>
               </p>
             }
           >
-            {data?.pages.map((page, idx) => (
-              <React.Fragment key={idx}>
-                {page.data.map((item) => (
-                  <ItemSalinTempel key={item._id} {...item} />
-                ))}
-              </React.Fragment>
-            ))}
+            <div className="space-y-5">
+              {data?.pages.map((page, idx) => (
+                <React.Fragment key={idx}>
+                  {page.data.map((item) => (
+                    <ItemSalinTempel key={item._id} {...item} />
+                  ))}
+                </React.Fragment>
+              ))}
+            </div>
           </InfiniteScroll>
         )}
       </section>
