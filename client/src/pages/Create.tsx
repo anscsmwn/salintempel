@@ -28,8 +28,9 @@ const Create = () => {
   };
   return (
     <Layout title="Create">
-      <div className="pt-5 flex items-center gap-6">
+      <div className="pt-5 flex items-center gap-5">
         <button
+          className="hover:bg-zinc-100 p-3 rounded-md duration-300 transition-all"
           onClick={() => {
             navigate(-1);
           }}
