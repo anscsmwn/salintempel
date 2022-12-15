@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import Create from './pages/Create';
 import Login from './pages/Login';
 import { AuthContextProvider } from './context/authContext';
+import Register from './pages/Register';
 function App() {
   return (
     <>
@@ -11,6 +12,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/create" element={<Create />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </AuthContextProvider>
     </>

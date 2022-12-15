@@ -10,7 +10,7 @@ const Layout = ({ title, children }: LayoutProps) => {
   return (
     <>
       <Helmet>
-        <title>{title} | 🧾 SalinTempel</title>
+        <title>{title} | SalinTempel</title>
       </Helmet>
       <div className="mx-auto max-w-md bg-white min-h-screen px-5">
         {children}

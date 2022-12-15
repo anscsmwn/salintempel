@@ -6,12 +6,20 @@ import { MdWavingHand } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import ItemSalinTempel from '../components/ItemSalinTempel';
 import { UserAuth } from '../context/authContext';
-
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 const Home = () => {
   const { data, isLoading } = useGetSalinTempels();
   const { logOut, user } = UserAuth();
   if (isLoading)
-    return <p className="text-sm text-gray-300 text-center">Loading...</p>;
+    return (
+      <AiOutlineLoading3Quarters className="animate-spin text-4xl mx-auto text-slate-700 text-center mt-10" />
+    );
+
+  const formattedName = (name: string) => {
+    const displayName = name.split('@')[0];
+    return displayName.charAt(0).toUpperCase() + displayName.slice(1);
+  };
+
   return (
     <Layout title="Home">
       <div>
@@ -27,26 +35,35 @@ const Home = () => {
           </div>
           {user ? (
             <button
-              className="hover:bg-zinc-100 p-3 rounded-md duration-300 transition-all"
+              className="hover:bg-black p-3 hover:text-white rounded-md duration-300 transition-all flex gap-2 items-center border border-black"
               onClick={() => {
                 logOut();
               }}
             >
               <HiLogout />
+              <p className="text-sm font-semibold">Logout</p>
             </button>
           ) : (
             <Link
-              className="hover:bg-zinc-100 p-3 rounded-md duration-300 transition-all"
+              className="hover:bg-black p-3 hover:text-white rounded-md duration-300 transition-all flex gap-2 items-center border border-black"
               to="/login"
             >
               <HiLogin />
+              <p className="text-sm font-semibold">Login</p>
             </Link>
           )}
         </div>
       </div>
       <div className="flex gap-2 items-center mt-2">
         <MdWavingHand />
-        <p className="text-sm">Hi, {user ? `${user.displayName}` : 'Guest'}</p>
+        <p className="text-sm">
+          Hi,{' '}
+          {user
+            ? user.displayName
+              ? `${user.displayName}`
+              : `${formattedName(user.email!)}`
+            : 'Guest'}
+        </p>
       </div>
       <section>
         {data?.data.length === 0 && (
