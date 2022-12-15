@@ -32,7 +32,7 @@ const Home = () => {
         </section>
       )}
 
-      <section className="mt-10 space-y-5 pb-20">
+      <section className="mt-10 space-y-5">
         {data && (
           <InfiniteScroll
             dataLength={data.pages.length}
@@ -43,7 +43,7 @@ const Home = () => {
             hasMore={hasNextPage}
             loader={<p className="text-center text-white">Loading...</p>}
             endMessage={
-              <p className="mt-5" style={{ textAlign: 'center' }}>
+              <p className="py-5" style={{ textAlign: 'center' }}>
                 <b>Yay! You have seen it all</b>
               </p>
             }
