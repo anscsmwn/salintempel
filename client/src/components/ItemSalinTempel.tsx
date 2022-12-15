@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { useLikeSalinTempel } from '../query-hooks/useSalinTempel';
 import { useState } from 'react';
 import { UserAuth } from '../context/authContext';
+import { IoCopyOutline } from 'react-icons/io5';
 const ItemSalinTempel = ({
   _id,
   content,
@@ -19,6 +20,7 @@ const ItemSalinTempel = ({
   const like = useLikeSalinTempel();
 
   useEffect(() => {
+    if (!user) return setIsLiked(false);
     setIsLiked(likes.includes(user?.email!));
     setHowManyLikes(likes.length);
   }, [user]);
@@ -26,8 +28,19 @@ const ItemSalinTempel = ({
   return (
     <article key={_id} className="border border-black p-5 rounded-md">
       <div>
-        <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-semibold mb-4">{title}</h2>
+        <div className="flex justify-between items-start">
+          <h2 className="text-2xl font-semibold mb-4 break-words max-w-[19rem]">
+            {title}
+          </h2>
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(content);
+              toast.success('Copied to clipboard');
+            }}
+            className="mt-2"
+          >
+            <IoCopyOutline />
+          </button>
         </div>
       </div>
 
