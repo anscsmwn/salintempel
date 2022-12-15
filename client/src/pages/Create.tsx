@@ -1,8 +1,8 @@
 import Layout from '../components/Layout';
-import { IoMdArrowRoundBack } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import { useCreateSalinTempel } from '../query-hooks/useSalinTempel';
 import { UserAuth } from '../context/authContext';
+import Header from '../components/Header';
 const Create = () => {
   const { user } = UserAuth();
   const navigate = useNavigate();
@@ -30,18 +30,8 @@ const Create = () => {
   };
   return (
     <Layout title="Create">
-      <div className="pt-5 flex items-center gap-5">
-        <button
-          className="hover:bg-zinc-100 p-3 rounded-md duration-300 transition-all"
-          onClick={() => {
-            navigate(-1);
-          }}
-        >
-          <IoMdArrowRoundBack />
-        </button>
-        <h1 className="text-2xl font-bold">SalinTempel</h1>
-      </div>
-      <section className="mt-10 mx-5">
+      <Header />
+      <section className="mt-10">
         <form onSubmit={onSubmit}>
           <div className="mb-5">
             <label
