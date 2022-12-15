@@ -41,7 +41,7 @@ const Home = () => {
             }}
             // @ts-ignore
             hasMore={hasNextPage}
-            loader={<p className="text-center text-white">Loading...</p>}
+            loader={<p className="text-center text-black">Loading...</p>}
             endMessage={
               <p className="py-5" style={{ textAlign: 'center' }}>
                 <b>Yay! You have seen it all</b>

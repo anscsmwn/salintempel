@@ -13,7 +13,7 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.enable('trust proxy');
 app.use('/api/salin-tempel', salinTempelRoute);
 
 app.get('/', (req, res) => {
