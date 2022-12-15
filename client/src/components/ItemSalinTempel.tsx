@@ -26,22 +26,21 @@ const ItemSalinTempel = ({
   }, [user]);
 
   return (
-    <article key={_id} className="border border-black p-5 rounded-md">
-      <div>
-        <div className="flex justify-between items-start">
-          <h2 className="text-2xl font-semibold mb-4 break-words max-w-[19rem]">
-            {title}
-          </h2>
-          <button
-            onClick={() => {
-              navigator.clipboard.writeText(content);
-              toast.success('Copied to clipboard');
-            }}
-            className="mt-2"
-          >
-            <IoCopyOutline />
-          </button>
-        </div>
+    <article
+      key={_id}
+      className="border border-black p-5 rounded-md break-words"
+    >
+      <div className="flex justify-between items-start gap-2">
+        <h2 className="text-2xl font-semibold mb-4 w-11/12">{title}</h2>
+        <button
+          onClick={() => {
+            navigator.clipboard.writeText(content);
+            toast.success('Copied to clipboard');
+          }}
+          className="mt-2 w-1/12"
+        >
+          <IoCopyOutline />
+        </button>
       </div>
 
       <p>{content}</p>

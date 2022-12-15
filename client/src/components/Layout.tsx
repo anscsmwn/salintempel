@@ -16,9 +16,9 @@ const Layout = ({ title, children }: LayoutProps) => {
         <title>{title} | SalinTempel</title>
       </Helmet>
       <div className="px-5">{children}</div>
-      {location.pathname !== '/login' && location.pathname !== '/register' && (
+      {/* {location.pathname !== '/login' && location.pathname !== '/register' && (
         <NavigationMenu />
-      )}
+      )} */}
     </>
   );
 };
