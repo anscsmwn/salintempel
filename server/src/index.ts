@@ -23,7 +23,21 @@ app.get('/', (req, res) => {
     description:
       'A place to archive salintempel (the Indonesian word for copypasta).',
     version: 'v1.0.0',
-    end_points: {},
+    end_points: {
+      '/api/salin-tempel': {
+        GET: 'Get all salin tempel.',
+        POST: 'Create a new salin tempel.',
+      },
+      '/api/salin-tempel/random': {
+        GET: 'Get a random salin tempel.',
+      },
+      '/api/salin-tempel/:id': {
+        DELETE: 'Delete a salin tempel.',
+      },
+      '/api/salin-tempel/:id/like/:userId': {
+        PUT: 'Like or unlike a salin tempel.',
+      },
+    },
     repository: 'https://github.com/aancaa/salintempel/server',
   });
 });
