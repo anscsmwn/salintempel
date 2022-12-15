@@ -2,7 +2,9 @@ import Layout from '../components/Layout';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import { useCreateSalinTempel } from '../query-hooks/useSalinTempel';
+import { UserAuth } from '../context/authContext';
 const Create = () => {
+  const { user } = UserAuth();
   const navigate = useNavigate();
   const add = useCreateSalinTempel();
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -53,6 +55,7 @@ const Create = () => {
               name="author"
               id="author"
               className="border border-black rounded-md px-3 py-2 w-full"
+              defaultValue={user ? user.email! : ''}
             />
           </div>
           <div className="mb-5">

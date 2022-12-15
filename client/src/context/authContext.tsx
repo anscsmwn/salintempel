@@ -1,6 +1,7 @@
 import { useContext, createContext, useEffect, useState } from 'react';
 // make alias for greater readability
 import { User as FirebaseUser } from 'firebase/auth';
+import toast from 'react-hot-toast';
 
 import {
   GoogleAuthProvider,
@@ -42,6 +43,7 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   const logOut = () => {
     signOut(auth);
+    toast.success('You have been logged out');
   };
 
   useEffect(() => {

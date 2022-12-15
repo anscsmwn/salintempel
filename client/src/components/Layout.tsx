@@ -1,5 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
+import NavigationMenu from './NavigationMenu/NavigationMenu';
 
 interface LayoutProps {
   title: string;
@@ -7,13 +9,16 @@ interface LayoutProps {
 }
 
 const Layout = ({ title, children }: LayoutProps) => {
+  const location = useLocation();
   return (
     <>
       <Helmet>
         <title>{title} | SalinTempel</title>
       </Helmet>
-      <div className="mx-auto max-w-md bg-white min-h-screen px-5">
+      <div className="px-5">
         {children}
+        {location.pathname !== '/login' &&
+          location.pathname !== '/register' && <NavigationMenu />}
       </div>
     </>
   );

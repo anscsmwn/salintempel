@@ -40,7 +40,7 @@ const Home = () => {
                 logOut();
               }}
             >
-              <HiLogout />
+              <HiLogout className="hidden sm:block" />
               <p className="text-sm font-semibold">Logout</p>
             </button>
           ) : (
@@ -48,7 +48,7 @@ const Home = () => {
               className="hover:bg-black p-3 hover:text-white rounded-md duration-300 transition-all flex gap-2 items-center border border-black"
               to="/login"
             >
-              <HiLogin />
+              <HiLogin className="hidden sm:block" />
               <p className="text-sm font-semibold">Login</p>
             </Link>
           )}
