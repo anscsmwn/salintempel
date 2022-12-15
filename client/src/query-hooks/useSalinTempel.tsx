@@ -1,10 +1,18 @@
-import { useQuery, useMutation, useQueryClient } from 'react-query';
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  useInfiniteQuery,
+} from 'react-query';
 import { UserAuth } from '../context/authContext';
-import { ResponseData } from '../types/types';
+import { ResponseData, ResponseDataGetAll } from '../types/types';
 
 const baseURL = import.meta.env.VITE_BASE_URL;
-const getSalinTempels = async (): Promise<ResponseData> => {
-  return await (await fetch(`${baseURL}/api/salin-tempel`)).json();
+
+const getSalinTempels = async ({
+  pageParam = `${baseURL}/api/salin-tempel`,
+}): Promise<ResponseDataGetAll> => {
+  return await (await fetch(pageParam)).json();
 };
 
 const createSalinTempel = async (data: {
@@ -38,7 +46,9 @@ const removeSalinTempel = async (id: string): Promise<ResponseData> => {
 };
 
 export const useGetSalinTempels = () => {
-  return useQuery('salin-tempel', getSalinTempels);
+  return useInfiniteQuery('salin-tempel', getSalinTempels, {
+    getNextPageParam: (lastPage) => lastPage.next,
+  });
 };
 
 export const useRemoveSalinTempel = () => {

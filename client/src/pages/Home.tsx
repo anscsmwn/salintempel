@@ -1,10 +1,13 @@
 import Layout from '../components/Layout';
 import { useGetSalinTempels } from '../query-hooks/useSalinTempel';
 import ItemSalinTempel from '../components/ItemSalinTempel';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import Header from '../components/Header';
+import React from 'react';
 const Home = () => {
-  const { data, isLoading } = useGetSalinTempels();
+  const { data, isLoading, fetchNextPage, hasNextPage } = useGetSalinTempels();
+
   if (isLoading)
     return (
       <AiOutlineLoading3Quarters className="animate-spin text-4xl mx-auto text-slate-700 text-center pt-10" />
@@ -13,8 +16,9 @@ const Home = () => {
   return (
     <Layout title="Home">
       <Header />
-      <section>
-        {data?.data.length === 0 && (
+
+      {data?.pages[0].count === 0 && (
+        <section>
           <>
             <img
               height={200}
@@ -25,12 +29,34 @@ const Home = () => {
             />
             <p className="text-sm text-gray-600 text-center mt-2">No data</p>
           </>
-        )}
-      </section>
+        </section>
+      )}
+
       <section className="mt-10 space-y-5 pb-20">
-        {data?.data.map((salinTempel) => (
-          <ItemSalinTempel key={salinTempel._id} {...salinTempel} />
-        ))}
+        {data && (
+          <InfiniteScroll
+            dataLength={data.pages.length}
+            next={() => {
+              fetchNextPage();
+            }}
+            // @ts-ignore
+            hasMore={hasNextPage}
+            loader={<p className="text-center text-white">Loading...</p>}
+            endMessage={
+              <p className="mt-5" style={{ textAlign: 'center' }}>
+                <b>Yay! You have seen it all</b>
+              </p>
+            }
+          >
+            {data?.pages.map((page, idx) => (
+              <React.Fragment key={idx}>
+                {page.data.map((item) => (
+                  <ItemSalinTempel key={item._id} {...item} />
+                ))}
+              </React.Fragment>
+            ))}
+          </InfiniteScroll>
+        )}
       </section>
     </Layout>
   );

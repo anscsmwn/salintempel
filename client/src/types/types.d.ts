@@ -14,3 +14,14 @@ export type ResponseData = {
   status: string;
   total: number;
 };
+
+export type ResponseDataGetAll = {
+  data: SalinTempel[];
+  end_point: string;
+  method: string;
+  status: string;
+  total: number;
+  next: string;
+  previous: string;
+  count: number;
+};

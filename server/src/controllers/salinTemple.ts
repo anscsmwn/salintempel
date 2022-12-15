@@ -21,14 +21,46 @@ export const createSalinTempel = async (req: Request, res: Response) => {
 };
 
 export const getSalinTempels = async (req: Request, res: Response) => {
-  const results = await SalinTempel.find();
-  res.status(200).json({
-    status: 'success',
-    end_point: req.originalUrl,
-    method: req.method,
-    total: results.length,
-    data: results,
-  });
+  // destructuring query params and set default value
+  const { offset = 0, limit = 1 } = req.query;
+  try {
+    // execute query with offset and limit values
+    const results = await SalinTempel.find()
+      .skip(Number(offset))
+      .limit(Number(limit))
+      .exec();
+
+    // get total documents in the SalinTempel collection
+    const count = await SalinTempel.countDocuments();
+
+    // return response with salin tempels, total count, and offset and limit values
+    res.status(200).json({
+      status: 'success',
+      end_point: req.originalUrl,
+      method: req.method,
+      data: results,
+      next:
+        count > Number(offset) + Number(limit)
+          ? `${req.protocol}://${req.get('host')}${req.originalUrl
+              .split('?')
+              .shift()}?offset=${Number(offset) + Number(limit)}&limit=${limit}`
+          : null,
+      previous:
+        Number(offset) - Number(limit) >= 0
+          ? `${req.protocol}://${req.get('host')}${req.originalUrl
+              .split('?')
+              .shift()}?offset=${Number(offset) - Number(limit)}&limit=${limit}`
+          : null,
+      count,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      end_point: req.originalUrl,
+      method: req.method,
+      message: 'Failed to get salin tempels.',
+    });
+  }
 };
 
 export const getRandomSalinTempel = async (req: Request, res: Response) => {
