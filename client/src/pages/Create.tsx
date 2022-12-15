@@ -42,7 +42,10 @@ const Create = () => {
       <section className="mt-10 mx-5">
         <form onSubmit={onSubmit}>
           <div className="mb-5">
-            <label htmlFor="author" className="block mb-2">
+            <label
+              htmlFor="author"
+              className="mb-2 block text-sm font-medium text-slate-700"
+            >
               Author (Optional)
             </label>
             <input
@@ -53,7 +56,10 @@ const Create = () => {
             />
           </div>
           <div className="mb-5">
-            <label htmlFor="title" className="block mb-2">
+            <label
+              htmlFor="title"
+              className="mb-2 after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
+            >
               Title
             </label>
             <input
@@ -65,7 +71,10 @@ const Create = () => {
             />
           </div>
           <div className="mb-5">
-            <label htmlFor="content" className="block mb-2">
+            <label
+              htmlFor="content"
+              className="mb-2 after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
+            >
               Content
             </label>
             <textarea
