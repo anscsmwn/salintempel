@@ -84,6 +84,7 @@ const Create = () => {
               required
               name="content"
               id="content"
+              rows={5}
               className="border border-black rounded-md px-3 py-2 w-full"
             />
           </div>

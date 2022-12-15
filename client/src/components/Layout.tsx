@@ -15,11 +15,10 @@ const Layout = ({ title, children }: LayoutProps) => {
       <Helmet>
         <title>{title} | SalinTempel</title>
       </Helmet>
-      <div className="px-5">
-        {children}
-        {location.pathname !== '/login' &&
-          location.pathname !== '/register' && <NavigationMenu />}
-      </div>
+      <div className="px-5">{children}</div>
+      {location.pathname !== '/login' && location.pathname !== '/register' && (
+        <NavigationMenu />
+      )}
     </>
   );
 };

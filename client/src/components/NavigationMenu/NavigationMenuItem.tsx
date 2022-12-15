@@ -18,7 +18,7 @@ const NavigationMenuItem = ({
     <Link
       className={`${
         isActive ? 'font-semibold' : 'text-sm'
-      } group flex items-center flex-col justify-center gap-1`}
+      } group flex items-center flex-col justify-center gap-1 text-white`}
       to={url}
     >
       <span className="scale-125 transition-all group-hover:scale-150">

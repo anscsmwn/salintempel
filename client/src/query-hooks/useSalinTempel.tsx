@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { UserAuth } from '../context/authContext';
 import { ResponseData } from '../types/types';
 
-const baseURL = 'http://localhost:3000';
+const baseURL = import.meta.env.VITE_BASE_URL;
 const getSalinTempels = async (): Promise<ResponseData> => {
   return await (await fetch(`${baseURL}/api/salin-tempel`)).json();
 };

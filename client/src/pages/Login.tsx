@@ -47,7 +47,7 @@ const Login = () => {
         <p className="py-2">
           Don't have an account yet?{' '}
           <Link to="/register" className="underline">
-            register here.
+            Register here.
           </Link>
         </p>
         <AlertError errors={errors} />

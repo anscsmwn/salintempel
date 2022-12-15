@@ -22,48 +22,46 @@ const Home = () => {
 
   return (
     <Layout title="Home">
-      <div>
-        <div className="pt-5 flex items-center justify-between gap-6">
-          <div className="flex items-center gap-5">
-            <Link
-              to="/create"
-              className="hover:bg-zinc-100 p-3 rounded-md duration-300 transition-all"
-            >
-              <AiOutlinePlus />
-            </Link>
-            <h1 className="text-2xl font-bold">SalinTempel</h1>
-          </div>
-          {user ? (
-            <button
-              className="hover:bg-black p-3 hover:text-white rounded-md duration-300 transition-all flex gap-2 items-center border border-black"
-              onClick={() => {
-                logOut();
-              }}
-            >
-              <HiLogout className="hidden sm:block" />
-              <p className="text-sm font-semibold">Logout</p>
-            </button>
-          ) : (
-            <Link
-              className="hover:bg-black p-3 hover:text-white rounded-md duration-300 transition-all flex gap-2 items-center border border-black"
-              to="/login"
-            >
-              <HiLogin className="hidden sm:block" />
-              <p className="text-sm font-semibold">Login</p>
-            </Link>
-          )}
+      <div className="pt-5 flex items-center justify-between gap-6">
+        <div className="flex items-center gap-5">
+          <Link
+            to="/create"
+            className="hover:bg-zinc-100 p-3 rounded-md duration-300 transition-all"
+          >
+            <AiOutlinePlus />
+          </Link>
+          <h1 className="text-2xl font-bold">SalinTempel</h1>
         </div>
+        {user ? (
+          <button
+            className="hover:bg-black p-3 hover:text-white rounded-md duration-300 transition-all flex gap-2 items-center border border-black"
+            onClick={() => {
+              logOut();
+            }}
+          >
+            <HiLogout className="hidden sm:block" />
+            <p className="text-sm font-semibold">Logout</p>
+          </button>
+        ) : (
+          <Link
+            className="hover:bg-black p-3 hover:text-white rounded-md duration-300 transition-all flex gap-2 items-center border border-black"
+            to="/login"
+          >
+            <HiLogin className="hidden sm:block" />
+            <p className="text-sm font-semibold">Login</p>
+          </Link>
+        )}
       </div>
-      <div className="flex gap-2 items-center mt-2">
-        <MdWavingHand />
+      <div className="flex gap-2 items-center mt-5 justify-end">
         <p className="text-sm">
           Hi,{' '}
           {user
             ? user.displayName
-              ? `${user.displayName}`
+              ? `${formattedName(user.displayName)}`
               : `${formattedName(user.email!)}`
             : 'Guest'}
         </p>
+        <MdWavingHand />
       </div>
       <section>
         {data?.data.length === 0 && (
@@ -79,7 +77,7 @@ const Home = () => {
           </>
         )}
       </section>
-      <section className="mt-10">
+      <section className="mt-10 space-y-5 pb-20">
         {data?.data.map((salinTempel) => (
           <ItemSalinTempel key={salinTempel._id} {...salinTempel} />
         ))}

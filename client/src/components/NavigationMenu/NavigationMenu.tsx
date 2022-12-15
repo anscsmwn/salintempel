@@ -18,13 +18,13 @@ const NavigationMenu = () => {
       icon: <FiHome />,
     },
     {
-      text: 'My SalinTempel',
+      text: 'SalinTempel',
       url: '/my-salintempel',
       icon: <HiOutlineDocumentText />,
     },
   ];
   return (
-    <nav className="fixed bottom-0 mx-auto flex w-full max-w-md justify-between px-14 pb-3">
+    <nav className="fixed bottom-0 mx-auto rounded-t-md flex w-full max-w-md justify-between px-14 pb-3 pt-4 bg-black bg-opacity-70 backdrop-blur-sm">
       {links.map((item, index) => (
         <NavigationMenuItem
           key={index}
