@@ -28,10 +28,10 @@ const ItemSalinTempel = ({
   return (
     <article
       key={_id}
-      className="border border-black p-5 rounded-md break-words my-4"
+      className="border border-black p-5 rounded-md break-words mb-4"
     >
       <div className="flex justify-between items-start gap-2">
-        <h2 className=" font-semibold mb-4 w-11/12">{title}</h2>
+        <h2 className="text-2xl font-semibold mb-4 w-11/12">{title}</h2>
         <button
           onClick={() => {
             navigator.clipboard.writeText(content);
