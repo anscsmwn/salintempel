@@ -4,6 +4,7 @@ export type SalinTempel = {
   title: string;
   _id: string;
   author: string;
+  likes: string[];
 };
 
 export type ResponseData = {

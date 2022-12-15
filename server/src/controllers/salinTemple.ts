@@ -60,3 +60,44 @@ export const deleteSalinTempel = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const likeSalinTempel = async (req: Request, res: Response) => {
+  try {
+    const { id, userId } = req.params;
+    const salinTempel = await SalinTempel.findById(id);
+    if (!salinTempel) {
+      return res.status(404).json({
+        status: 'fail',
+        end_point: req.originalUrl,
+        method: req.method,
+        message: 'Salin tempel not found.',
+      });
+    }
+
+    const isLiked = salinTempel.likes.includes(userId);
+
+    const result = await SalinTempel.findByIdAndUpdate(
+      id,
+      {
+        likes: isLiked
+          ? salinTempel.likes.filter((like) => like !== userId)
+          : [...salinTempel.likes, userId],
+      },
+      { new: true },
+    );
+
+    res.status(200).json({
+      status: 'success',
+      end_point: req.originalUrl,
+      method: req.method,
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      end_point: req.originalUrl,
+      method: req.method,
+      message: 'Failed to like salin tempel.',
+    });
+  }
+};
