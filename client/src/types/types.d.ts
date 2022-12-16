@@ -1,10 +1,11 @@
 export type SalinTempel = {
   content: string;
-  like: number;
   title: string;
   _id: string;
   author: string;
-  likes: string[];
+  likesBy: string[];
+  totalLikes: number;
+  createdAt: string;
 };
 
 export type ResponseData = {

@@ -22,12 +22,13 @@ export const createSalinTempel = async (req: Request, res: Response) => {
 
 export const getSalinTempels = async (req: Request, res: Response) => {
   // destructuring query params and set default value
-  const { offset = 0, limit = 1 } = req.query;
+  const { offset = 0, limit = 1, sort = '' } = req.query;
   try {
     // execute query with offset and limit values
     const results = await SalinTempel.find()
       .skip(Number(offset))
       .limit(Number(limit))
+      .sort({ createdAt: sort === 'createdAt' ? -1 : 1 })
       .exec();
 
     // get total documents in the SalinTempel collection
@@ -106,14 +107,17 @@ export const likeSalinTempel = async (req: Request, res: Response) => {
       });
     }
 
-    const isLiked = salinTempel.likes.includes(userId);
+    const isLiked = salinTempel.likesBy.includes(userId);
 
     const result = await SalinTempel.findByIdAndUpdate(
       id,
       {
-        likes: isLiked
-          ? salinTempel.likes.filter((like) => like !== userId)
-          : [...salinTempel.likes, userId],
+        likesBy: isLiked
+          ? salinTempel.likesBy.filter((like) => like !== userId)
+          : [...salinTempel.likesBy, userId],
+        totalLikes: isLiked
+          ? salinTempel.totalLikes - 1
+          : salinTempel.totalLikes + 1,
       },
       { new: true },
     );

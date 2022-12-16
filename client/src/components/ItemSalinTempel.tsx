@@ -7,23 +7,34 @@ import { useLikeSalinTempel } from '../query-hooks/useSalinTempel';
 import { useState } from 'react';
 import { UserAuth } from '../context/authContext';
 import { IoCopyOutline } from 'react-icons/io5';
+
 const ItemSalinTempel = ({
   _id,
   content,
   title,
   author,
-  likes,
+  likesBy,
+  createdAt,
+  totalLikes,
 }: SalinTempel) => {
   const { user } = UserAuth();
-  const [isLiked, setIsLiked] = useState<boolean>(likes.includes(user?.email!));
-  const [howManyLikes, setHowManyLikes] = useState<number>(likes.length);
+  const [isLiked, setIsLiked] = useState<boolean>(
+    likesBy.includes(user?.email!),
+  );
+  const [howManyLikes, setHowManyLikes] = useState<number>(likesBy.length);
   const like = useLikeSalinTempel();
 
   useEffect(() => {
     if (!user) return setIsLiked(false);
-    setIsLiked(likes.includes(user?.email!));
-    setHowManyLikes(likes.length);
+    setIsLiked(likesBy.includes(user?.email!));
+    setHowManyLikes(totalLikes);
   }, [user]);
+
+  const formattedDate = new Date(createdAt).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 
   return (
     <article
@@ -44,11 +55,10 @@ const ItemSalinTempel = ({
       </div>
 
       <p className="text-base">{content}</p>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mt-3">
         <p className="text-xs">{author}</p>
         <div className="flex gap-2 items-center">
           <button
-            className="flex items-center gap-2"
             onClick={() => {
               if (!user)
                 return toast.error('You must be logged in to like a post');
@@ -58,10 +68,11 @@ const ItemSalinTempel = ({
             }}
           >
             {isLiked ? <BsHeartFill /> : <BsHeart />}
-            <p className="mb-1">{howManyLikes}</p>
           </button>
+          <p className="mb-1">{howManyLikes}</p>
         </div>
       </div>
+      <p className="text-xs text-zinc-700">{formattedDate}</p>
     </article>
   );
 };

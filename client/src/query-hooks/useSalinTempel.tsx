@@ -1,9 +1,4 @@
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  useInfiniteQuery,
-} from 'react-query';
+import { useMutation, useQueryClient, useInfiniteQuery } from 'react-query';
 import { UserAuth } from '../context/authContext';
 import { ResponseData, ResponseDataGetAll } from '../types/types';
 
@@ -45,18 +40,41 @@ const removeSalinTempel = async (id: string): Promise<ResponseData> => {
   ).json();
 };
 
-export const useGetSalinTempels = () => {
+export const useGetSalinTempels = (isSortNew: boolean) => {
   return useInfiniteQuery('salin-tempel', getSalinTempels, {
-    getNextPageParam: (lastPage) => lastPage.next,
+    getNextPageParam: (lastPage) =>
+      lastPage.next
+        ? isSortNew
+          ? `${lastPage.next}&sort=createdAt`
+          : lastPage.next
+        : null,
   });
 };
 
 export const useRemoveSalinTempel = () => {
   const queryClient = useQueryClient();
-
   return useMutation(removeSalinTempel, {
     onSuccess: () => {
       queryClient.invalidateQueries('salin-tempel');
+    },
+  });
+};
+
+export const useGetSalinTempelSort = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (isSortNew: boolean) => {
+      const data = await getSalinTempels({
+        pageParam: `${baseURL}/api/salin-tempel/?sort=${
+          isSortNew ? 'createdAt' : ''
+        }`,
+      });
+      return data;
+    },
+    onSuccess: (response) => {
+      queryClient.setQueryData('salin-tempel', {
+        pages: [response],
+      });
     },
   });
 };
@@ -79,7 +97,6 @@ export const useLikeSalinTempel = () => {
 
 export const useCreateSalinTempel = () => {
   const queryClient = useQueryClient();
-
   return useMutation(createSalinTempel, {
     onSuccess: () => {
       queryClient.invalidateQueries('salin-tempel');

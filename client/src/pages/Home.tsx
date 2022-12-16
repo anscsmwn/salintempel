@@ -1,23 +1,30 @@
 import Layout from '../components/Layout';
-import { useGetSalinTempels } from '../query-hooks/useSalinTempel';
+
+import {
+  useGetSalinTempels,
+  useGetSalinTempelSort,
+} from '../query-hooks/useSalinTempel';
 import ItemSalinTempel from '../components/ItemSalinTempel';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import Header from '../components/Header';
 import React from 'react';
-const Home = () => {
-  const { data, isLoading, fetchNextPage, hasNextPage } = useGetSalinTempels();
 
+import { AiOutlineClockCircle, AiOutlineFire } from 'react-icons/ai';
+
+const Home = () => {
+  const sort = useGetSalinTempelSort();
+  const [isSortNew, setIsSortNew] = React.useState<boolean>(false);
+  const { data, isLoading, fetchNextPage, hasNextPage } =
+    useGetSalinTempels(isSortNew);
   if (isLoading)
     return (
-      <AiOutlineLoading3Quarters className="animate-spin text-4xl mx-auto text-slate-700 text-center pt-10" />
+      <AiOutlineLoading3Quarters className="animate-spin text-4xl mx-auto text-slate-800 text-center pt-10" />
     );
-
   return (
     <Layout title="Home">
       <Header />
-
-      {data?.pages[0].count === 0 && (
+      {data?.pages[0].count === 0 ? (
         <section>
           <>
             <img
@@ -30,38 +37,61 @@ const Home = () => {
             <p className="text-sm text-gray-600 text-center mt-2">No data</p>
           </>
         </section>
-      )}
+      ) : (
+        <>
+          <div className="flex items-center gap-4 text-xs mt-4">
+            <button
+              onClick={() => {
+                setIsSortNew((prev) => !prev);
+                sort.mutate(!isSortNew);
+              }}
+              className={`flex gap-1 items-center px-3 py-2 rounded-full border border-black ${
+                isSortNew ? 'bg-black text-white' : ''
+              }`}
+            >
+              <AiOutlineClockCircle />
+              <p>New</p>
+            </button>
+            <button className="gap-1 items-center px-3 py-2 rounded-full border border-black hidden">
+              <AiOutlineFire />
+              <p>Popular</p>
+            </button>
+          </div>
 
-      <section className="mt-10 space-y-5">
-        {data && (
-          <InfiniteScroll
-            dataLength={data.pages.length}
-            next={() => {
-              fetchNextPage();
-            }}
-            // @ts-ignore
-            hasMore={hasNextPage}
-            loader={
-              <p className="text-center text-black text-sx pb-4">Loading...</p>
-            }
-            endMessage={
-              <p className="py-5" style={{ textAlign: 'center' }}>
-                <b>Yay! You have seen it all</b>
-              </p>
-            }
-          >
-            <div className="space-y-5">
-              {data?.pages.map((page, idx) => (
-                <React.Fragment key={idx}>
-                  {page.data.map((item) => (
-                    <ItemSalinTempel key={item._id} {...item} />
+          <section className="mt-5 space-y-5">
+            {data && (
+              <InfiniteScroll
+                dataLength={data.pages.length}
+                next={() => {
+                  fetchNextPage();
+                }}
+                // @ts-ignore
+                hasMore={hasNextPage}
+                loader={
+                  <p className="text-center text-black text-sx py-4">
+                    Loading...
+                  </p>
+                }
+                endMessage={
+                  <p className="py-5" style={{ textAlign: 'center' }}>
+                    <b>Yay! You have seen it all</b>
+                  </p>
+                }
+              >
+                <div className="space-y-5">
+                  {data?.pages.map((page, idx) => (
+                    <React.Fragment key={idx}>
+                      {page.data.map((item) => (
+                        <ItemSalinTempel key={item._id} {...item} />
+                      ))}
+                    </React.Fragment>
                   ))}
-                </React.Fragment>
-              ))}
-            </div>
-          </InfiniteScroll>
-        )}
-      </section>
+                </div>
+              </InfiniteScroll>
+            )}
+          </section>
+        </>
+      )}
     </Layout>
   );
 };
