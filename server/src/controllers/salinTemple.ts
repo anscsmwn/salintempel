@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { SortOrder } from 'mongoose';
 import SalinTempel from '../model/salinTempel';
 
 export const createSalinTempel = async (req: Request, res: Response) => {
@@ -19,16 +20,30 @@ export const createSalinTempel = async (req: Request, res: Response) => {
     });
   }
 };
-
+interface SortOptions {
+  [key: string]: SortOrder;
+}
 export const getSalinTempels = async (req: Request, res: Response) => {
   // destructuring query params and set default value
-  const { offset = 0, limit = 1, sort = '' } = req.query;
+  const { offset = 0, limit = 2, sort = '', type = '' } = req.query;
   try {
+    const sortOptions: SortOptions = {
+      totalLikes: type === 'popular' ? -1 : 1,
+      createdAt: sort === 'new' ? -1 : 1,
+    };
+
+    if (sort === '') {
+      delete sortOptions.createdAt;
+    }
+    if (type === '') {
+      delete sortOptions.totalLikes;
+    }
+
     // execute query with offset and limit values
     const results = await SalinTempel.find()
       .skip(Number(offset))
       .limit(Number(limit))
-      .sort({ createdAt: sort === 'createdAt' ? -1 : 1 })
+      .sort(sortOptions)
       .exec();
 
     // get total documents in the SalinTempel collection

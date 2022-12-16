@@ -15,8 +15,9 @@ import { AiOutlineClockCircle, AiOutlineFire } from 'react-icons/ai';
 const Home = () => {
   const sort = useGetSalinTempelSort();
   const [isSortNew, setIsSortNew] = React.useState<boolean>(false);
-  const { data, isLoading, fetchNextPage, hasNextPage } =
-    useGetSalinTempels(isSortNew);
+  const [isSortPopular, setIsSortPopular] = React.useState<boolean>(false);
+
+  const { data, isLoading, fetchNextPage, hasNextPage } = useGetSalinTempels();
   if (isLoading)
     return (
       <AiOutlineLoading3Quarters className="animate-spin text-4xl mx-auto text-slate-800 text-center pt-10" />
@@ -43,7 +44,7 @@ const Home = () => {
             <button
               onClick={() => {
                 setIsSortNew((prev) => !prev);
-                sort.mutate(!isSortNew);
+                sort.mutate({ isSortNew: !isSortNew, isSortPopular });
               }}
               className={`flex gap-1 items-center px-3 py-2 rounded-full border border-black ${
                 isSortNew ? 'bg-black text-white' : ''
@@ -52,7 +53,15 @@ const Home = () => {
               <AiOutlineClockCircle />
               <p>New</p>
             </button>
-            <button className="gap-1 items-center px-3 py-2 rounded-full border border-black hidden">
+            <button
+              onClick={() => {
+                setIsSortPopular((prev) => !prev);
+                sort.mutate({ isSortPopular: !isSortPopular, isSortNew });
+              }}
+              className={`flex gap-1 items-center px-3 py-2 rounded-full border border-black ${
+                isSortPopular ? 'bg-black text-white' : ''
+              }`}
+            >
               <AiOutlineFire />
               <p>Popular</p>
             </button>

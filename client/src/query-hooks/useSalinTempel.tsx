@@ -40,14 +40,9 @@ const removeSalinTempel = async (id: string): Promise<ResponseData> => {
   ).json();
 };
 
-export const useGetSalinTempels = (isSortNew: boolean) => {
+export const useGetSalinTempels = () => {
   return useInfiniteQuery('salin-tempel', getSalinTempels, {
-    getNextPageParam: (lastPage) =>
-      lastPage.next
-        ? isSortNew
-          ? `${lastPage.next}&sort=createdAt`
-          : lastPage.next
-        : null,
+    getNextPageParam: (lastPage) => lastPage.next,
   });
 };
 
@@ -63,11 +58,32 @@ export const useRemoveSalinTempel = () => {
 export const useGetSalinTempelSort = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (isSortNew: boolean) => {
+    mutationFn: async ({
+      isSortNew,
+      isSortPopular,
+    }: {
+      [key: string]: boolean;
+    }) => {
+      const formattedParams = () => {
+        const params: {
+          [key: string]: string;
+        } = {
+          sort: isSortNew ? 'new' : '',
+          type: isSortPopular ? 'popular' : '',
+        };
+        // loop through params and remove empty values
+        Object.keys(params).forEach((key) => {
+          if (!params[key]) {
+            delete params[key];
+          }
+        });
+        // if params key is empty, return empty string and if not return params in format of query string
+        return Object.keys(params).length === 0
+          ? ''
+          : `?${new URLSearchParams(params).toString()}`;
+      };
       const data = await getSalinTempels({
-        pageParam: `${baseURL}/api/salin-tempel/?sort=${
-          isSortNew ? 'createdAt' : ''
-        }`,
+        pageParam: `${baseURL}/api/salin-tempel/${formattedParams()}`,
       });
       return data;
     },
