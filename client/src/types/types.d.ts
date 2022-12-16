@@ -14,6 +14,7 @@ export type ResponseData = {
   method: string;
   status: string;
   total: number;
+  errors: string[];
 };
 
 export type ResponseDataGetAll = {

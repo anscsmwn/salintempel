@@ -1,9 +1,22 @@
 import { Request, Response } from 'express';
 import { SortOrder } from 'mongoose';
 import SalinTempel from '../model/salinTempel';
+import { validationResult } from 'express-validator';
 
 export const createSalinTempel = async (req: Request, res: Response) => {
   try {
+    // check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        status: 'fail',
+        end_point: req.originalUrl,
+        method: req.method,
+        message: 'Failed to create salin tempel.',
+        errors: errors.array().map((error) => error.msg),
+      });
+    }
+
     const result = await SalinTempel.create(req.body);
     res.status(201).json({
       status: 'success',

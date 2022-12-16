@@ -7,12 +7,13 @@ import {
   deleteSalinTempel,
   likeSalinTempel,
 } from '../controllers/salinTemple';
+import { createSalinTempeValidator } from '../lib/validator';
 
 const router = express.Router();
 
 router.get('/', getSalinTempels);
 router.get('/random', getRandomSalinTempel);
-router.post('/', createSalinTempel);
+router.post('/', createSalinTempeValidator, createSalinTempel);
 router.delete('/:id', deleteSalinTempel);
 router.put('/:id/like/:userId', likeSalinTempel);
 

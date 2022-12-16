@@ -3,10 +3,14 @@ import { BsHeart, BsHeartFill } from 'react-icons/bs';
 import toast from 'react-hot-toast';
 import { useEffect } from 'react';
 
-import { useLikeSalinTempel } from '../query-hooks/useSalinTempel';
+import {
+  useLikeSalinTempel,
+  useRemoveSalinTempel,
+} from '../query-hooks/useSalinTempel';
 import { useState } from 'react';
 import { UserAuth } from '../context/authContext';
 import { IoCopyOutline } from 'react-icons/io5';
+import { useSearchParams } from 'react-router-dom';
 
 const ItemSalinTempel = ({
   _id,
@@ -21,9 +25,11 @@ const ItemSalinTempel = ({
   const [isLiked, setIsLiked] = useState<boolean>(
     likesBy.includes(user?.email!),
   );
+  const [search, setSearch] = useSearchParams();
+
   const [howManyLikes, setHowManyLikes] = useState<number>(likesBy.length);
   const like = useLikeSalinTempel();
-
+  const remove = useRemoveSalinTempel();
   useEffect(() => {
     if (!user) return setIsLiked(false);
     setIsLiked(likesBy.includes(user?.email!));
@@ -35,6 +41,8 @@ const ItemSalinTempel = ({
     month: 'long',
     day: 'numeric',
   });
+
+  const key = search.get(import.meta.env.VITE_KEY!);
 
   return (
     <article key={_id} className="border border-[#f7f7f6] p-5 rounded-md">
@@ -71,6 +79,18 @@ const ItemSalinTempel = ({
         </div>
       </div>
       <p className="text-xs text-zinc-400">{formattedDate}</p>
+      {(author === user?.email || key) && (
+        <div className="flex justify-end">
+          <button
+            onClick={() => {
+              remove.mutate(_id);
+            }}
+            className="bg-[#39252b] text-xs text-white px-2 py-1 rounded-md"
+          >
+            Delete
+          </button>
+        </div>
+      )}
     </article>
   );
 };

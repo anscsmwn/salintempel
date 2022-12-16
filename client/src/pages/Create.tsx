@@ -3,8 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useCreateSalinTempel } from '../query-hooks/useSalinTempel';
 import { UserAuth } from '../context/authContext';
 import Header from '../components/Header';
+import { useState } from 'react';
+import AlertError from '../components/AlertError';
+
 const Create = () => {
   const { user } = UserAuth();
+  const [errors, setErrors] = useState<string[]>([]);
   const navigate = useNavigate();
   const add = useCreateSalinTempel();
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -23,8 +27,12 @@ const Create = () => {
       delete data.author;
     }
     add.mutate(data, {
-      onSuccess: () => {
-        navigate('/');
+      onSuccess: (response) => {
+        if (response.status === 'fail') {
+          setErrors(response.errors);
+        } else {
+          navigate('/');
+        }
       },
     });
   };
@@ -32,7 +40,8 @@ const Create = () => {
     <Layout title="Create">
       <Header />
       <section className="mt-10">
-        <form onSubmit={onSubmit}>
+        <AlertError errors={errors} />
+        <form onSubmit={onSubmit} className="mt-5">
           <div className="mb-5">
             <label htmlFor="author" className="mb-2 label">
               Author (Optional)
