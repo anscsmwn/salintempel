@@ -15,7 +15,9 @@ const Layout = ({ title, children }: LayoutProps) => {
       <Helmet>
         <title>{title} | SalinTempel</title>
       </Helmet>
-      <div className="px-5">{children}</div>
+      <div className="px-5 bg-[#18181b] text-[#f7f7f6] min-h-screen">
+        {children}
+      </div>
       {/* {location.pathname !== '/login' && location.pathname !== '/register' && (
         <NavigationMenu />
       )} */}

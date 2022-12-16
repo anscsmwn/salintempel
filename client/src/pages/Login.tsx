@@ -53,38 +53,32 @@ const Login = () => {
         <AlertError errors={errors} />
         <form onSubmit={handleSubmit} className="w-full">
           <div className="flex flex-col py-2">
-            <label className="mb-2 block text-sm font-medium text-slate-700">
-              Email Address
-            </label>
+            <label className="label">Email Address</label>
             <input
               onChange={(e) => setEmail(e.target.value)}
-              className="border border-black rounded-md px-3 py-2 w-full"
+              className="input"
               type="email"
               required
             />
           </div>
           <div className="flex flex-col py-2">
-            <label className="mb-2 block text-sm font-medium text-slate-700">
-              Password
-            </label>
+            <label className="label">Password</label>
             <input
               onChange={(e) => setPassword(e.target.value)}
-              className="border border-black rounded-md px-3 py-2 w-full"
+              className="input"
               type="password"
               required
             />
           </div>
-          <button className="w-full mt-10 mx-auto font-bold py-3 px-4 rounded border border-black shadow-sm hover:bg-black hover:text-white transition-all duration-300">
-            Sign In
-          </button>
+          <button className="btn-secondary">Sign In</button>
         </form>
 
         <div className="flex items-center justify-between w-full">
-          <div className="w-full border-b border-slate-700"></div>
-          <p className="py-2 w-full text-slate-700 text-center text-xs sm:text-sm px-5">
+          <div className="w-full border-b border-zinc-100"></div>
+          <p className="py-2 w-full text-zinc-100 text-center text-xs sm:text-sm px-5">
             Or continue with
           </p>
-          <div className="w-full border-b border-slate-700"></div>
+          <div className="w-full border-b border-zinc-100"></div>
         </div>
 
         <button onClick={() => handleGoogleSignIn()}>

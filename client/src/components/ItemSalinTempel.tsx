@@ -37,11 +37,8 @@ const ItemSalinTempel = ({
   });
 
   return (
-    <article
-      key={_id}
-      className="border border-black p-5 rounded-md break-words"
-    >
-      <div className="flex justify-between items-start gap-2">
+    <article key={_id} className="border border-[#f7f7f6] p-5 rounded-md">
+      <div className="flex justify-between items-start gap-2 break-words">
         <h2 className="text-2xl font-semibold mb-4 w-11/12">{title}</h2>
         <button
           onClick={() => {
@@ -53,10 +50,11 @@ const ItemSalinTempel = ({
           <IoCopyOutline />
         </button>
       </div>
-
-      <p className="text-base">{content}</p>
+      <div className="overflow-auto">
+        <p>{content}</p>
+      </div>
       <div className="flex justify-between items-center mt-3">
-        <p className="text-xs">{author}</p>
+        <p className="text-xs ">{author}</p>
         <div className="flex gap-2 items-center">
           <button
             onClick={() => {
@@ -67,12 +65,12 @@ const ItemSalinTempel = ({
               setIsLiked(!isLiked);
             }}
           >
-            {isLiked ? <BsHeartFill /> : <BsHeart />}
+            {isLiked ? <BsHeartFill className="fill-white" /> : <BsHeart />}
           </button>
           <p className="mb-1">{howManyLikes}</p>
         </div>
       </div>
-      <p className="text-xs text-zinc-700">{formattedDate}</p>
+      <p className="text-xs text-zinc-400">{formattedDate}</p>
     </article>
   );
 };

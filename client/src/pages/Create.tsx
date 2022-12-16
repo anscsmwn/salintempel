@@ -34,24 +34,21 @@ const Create = () => {
       <section className="mt-10">
         <form onSubmit={onSubmit}>
           <div className="mb-5">
-            <label
-              htmlFor="author"
-              className="mb-2 block text-sm font-medium text-slate-700"
-            >
+            <label htmlFor="author" className="mb-2 label">
               Author (Optional)
             </label>
             <input
               type="text"
               name="author"
               id="author"
-              className="border border-black rounded-md px-3 py-2 w-full"
+              className="input"
               defaultValue={user ? user.email! : ''}
             />
           </div>
           <div className="mb-5">
             <label
               htmlFor="title"
-              className="mb-2 after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
+              className="mb-2 after:content-['*'] after:ml-0.5 after:text-red-500 label"
             >
               Title
             </label>
@@ -60,13 +57,13 @@ const Create = () => {
               type="text"
               name="title"
               id="title"
-              className="border border-black rounded-md px-3 py-2 w-full"
+              className="input"
             />
           </div>
           <div className="mb-5">
             <label
               htmlFor="content"
-              className="mb-2 after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700"
+              className="mb-2 after:content-['*'] after:ml-0.5 after:text-red-500 label"
             >
               Content
             </label>
@@ -75,7 +72,7 @@ const Create = () => {
               name="content"
               id="content"
               rows={5}
-              className="border border-black rounded-md px-3 py-2 w-full"
+              className="input"
             />
           </div>
           <button className="bg-black text-white px-5 py-2 rounded-md">

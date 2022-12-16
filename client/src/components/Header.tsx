@@ -25,7 +25,7 @@ const Header = () => {
                 navigate('/create');
               }
             }}
-            className="hover:bg-zinc-100 p-3 rounded-md duration-300 transition-all"
+            className="btn-primary border-none"
           >
             {location.pathname === '/create' ? (
               <IoMdArrowRoundBack />
@@ -37,7 +37,7 @@ const Header = () => {
         </div>
         {user ? (
           <button
-            className="hover:bg-black p-3 hover:text-white rounded-md duration-300 transition-all flex gap-2 items-center border border-black"
+            className="btn-primary"
             onClick={() => {
               logOut();
             }}
@@ -46,10 +46,7 @@ const Header = () => {
             <p className="text-sm font-semibold">Logout</p>
           </button>
         ) : (
-          <Link
-            className="hover:bg-black p-3 hover:text-white rounded-md duration-300 transition-all flex gap-2 items-center border border-black"
-            to="/login"
-          >
+          <Link className="btn-primary" to="/login">
             <HiLogin className="hidden sm:block" />
             <p className="text-sm font-semibold">Login</p>
           </Link>

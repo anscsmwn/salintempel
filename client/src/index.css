@@ -3,5 +3,20 @@
 @tailwind utilities;
 
 body {
-  background-color: #f5f5f5;
+  background-color: #2b2d31;
+}
+
+@layer components {
+  .btn-primary {
+    @apply hover:bg-[#22232a] p-3 rounded-md duration-300 transition-all flex gap-2 items-center border border-white;
+  }
+  .input {
+    @apply rounded-md px-3 py-2 w-full bg-zinc-800;
+  }
+  .label {
+    @apply mb-2 block text-sm font-medium text-zinc-100;
+  }
+  .btn-secondary {
+    @apply w-full mt-10 mx-auto font-bold py-3 px-4 rounded border border-white shadow-sm hover:bg-white hover:text-black transition-all duration-300;
+  }
 }

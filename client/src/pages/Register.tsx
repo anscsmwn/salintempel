@@ -36,30 +36,24 @@ const Register = () => {
         <AlertError errors={errors} />
         <form onSubmit={handleSubmit} className="w-full">
           <div className="flex flex-col py-2">
-            <label className="mb-2 block text-sm font-medium text-slate-700">
-              Email Address
-            </label>
+            <label className="mb-2 label">Email Address</label>
             <input
               onChange={(e) => setEmail(e.target.value)}
-              className="border border-black rounded-md px-3 py-2 w-full"
+              className="input"
               type="email"
               required
             />
           </div>
           <div className="flex flex-col py-2">
-            <label className="mb-2 block text-sm font-medium text-slate-700">
-              Password
-            </label>
+            <label className="mb-2 label">Password</label>
             <input
               onChange={(e) => setPassword(e.target.value)}
-              className="border border-black rounded-md px-3 py-2 w-full"
+              className="input"
               type="password"
               required
             />
           </div>
-          <button className="w-full mt-10 mx-auto font-bold py-3 px-4 rounded border border-black shadow-sm hover:bg-black hover:text-white transition-all duration-300">
-            Sign Up
-          </button>
+          <button className="btn-secondary">Sign Up</button>
         </form>
       </div>
     </Layout>

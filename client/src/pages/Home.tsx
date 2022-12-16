@@ -46,8 +46,8 @@ const Home = () => {
                 setIsSortNew((prev) => !prev);
                 sort.mutate({ isSortNew: !isSortNew, isSortPopular });
               }}
-              className={`flex gap-1 items-center px-3 py-2 rounded-full border border-black ${
-                isSortNew ? 'bg-black text-white' : ''
+              className={`flex gap-1 items-center px-3 py-2 rounded-full border border-white  ${
+                isSortNew ? 'bg-white text-[#22232a]' : ''
               }`}
             >
               <AiOutlineClockCircle />
@@ -58,8 +58,8 @@ const Home = () => {
                 setIsSortPopular((prev) => !prev);
                 sort.mutate({ isSortPopular: !isSortPopular, isSortNew });
               }}
-              className={`flex gap-1 items-center px-3 py-2 rounded-full border border-black ${
-                isSortPopular ? 'bg-black text-white' : ''
+              className={`flex gap-1 items-center px-3 py-2 rounded-full border border-white ${
+                isSortPopular ? 'bg-white text-[#22232a]' : ''
               }`}
             >
               <AiOutlineFire />
