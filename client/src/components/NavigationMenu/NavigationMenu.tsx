@@ -25,14 +25,6 @@ const NavigationMenu = () => {
   return (
     <nav className="bg-black max-h-[4.4rem] px-14 rounded-t-xl fixed bottom-0 mx-auto w-full max-w-md bg-opacity-70 backdrop-blur-sm">
       <div className="flex relative">
-        <span
-          className={`bg-white duration-500 ${
-            location.pathname === active &&
-            `transform ${Menus.find((menu) => menu.url === active)?.dis}`
-          }
-          } border-4 border-gray-900 h-16 w-16 absolute
-           -top-5 rounded-full`}
-        ></span>
         <ul className="flex items-center justify-center gap-10 w-full">
           {Menus.map((menu, i) => (
             <li key={i} className="w-16">
@@ -41,6 +33,14 @@ const NavigationMenu = () => {
                 className="flex flex-col text-center pt-6 items-center"
                 onClick={() => setActive(menu.url)}
               >
+                <span
+                  className={`
+                  ${
+                    menu.url === active &&
+                    `bg-white border-4 border-gray-900 duration-500 `
+                  }
+                  h-16 w-16 absolute -top-5 rounded-full`}
+                ></span>
                 <span
                   className={`text-xl cursor-pointer duration-500 text-white ${
                     active === menu.url
