@@ -10,7 +10,6 @@ import {
 import { useState } from 'react';
 import { UserAuth } from '../context/authContext';
 import { IoCopyOutline } from 'react-icons/io5';
-import { useSearchParams } from 'react-router-dom';
 
 const ItemSalinTempel = ({
   _id,
@@ -20,13 +19,13 @@ const ItemSalinTempel = ({
   likesBy,
   createdAt,
   totalLikes,
+  isNSFW,
 }: SalinTempel) => {
   const { user } = UserAuth();
   const [isLiked, setIsLiked] = useState<boolean>(
     likesBy.includes(user?.email!),
   );
-  const [search, setSearch] = useSearchParams();
-
+  const [isNSFWContent, setIsNSFWContent] = useState<boolean>(isNSFW);
   const [howManyLikes, setHowManyLikes] = useState<number>(likesBy.length);
   const like = useLikeSalinTempel();
   const remove = useRemoveSalinTempel();
@@ -45,10 +44,10 @@ const ItemSalinTempel = ({
   return (
     <article key={_id} className="border border-[#f7f7f6] p-5 rounded-md">
       <div className="flex justify-between items-start gap-2 break-words">
-        <h2 className="text-2xl font-semibold mb-4 w-11/12">{title}</h2>
+        <h2 className="text-2xl font-semibold mb-4 w-10/12">{title}</h2>
         {(author === user?.email ||
           user?.email === import.meta.env.VITE_SUPER_ADMIN) && (
-          <div className="flex items-center gap-2 mt-2 w-1/12">
+          <div className="flex items-center justify-end gap-2 mt-2 w-2/12">
             <button
               onClick={() => {
                 remove.mutate(_id);
@@ -67,27 +66,42 @@ const ItemSalinTempel = ({
           </div>
         )}
       </div>
-      <div className="overflow-auto">
-        <p>{content}</p>
-      </div>
-      <div className="flex justify-between items-center mt-3">
-        <p className="text-xs ">{author}</p>
-        <div className="flex gap-2 items-center">
+      {isNSFWContent ? (
+        <div className="min-h-[15rem] flex justify-center items-center">
           <button
-            onClick={() => {
-              if (!user)
-                return toast.error('You must be logged in to like a post');
-              like.mutate(_id);
-              setHowManyLikes(isLiked ? howManyLikes - 1 : howManyLikes + 1);
-              setIsLiked(!isLiked);
-            }}
+            className="btn-primary text-xs"
+            onClick={() => setIsNSFWContent(false)}
           >
-            {isLiked ? <BsHeartFill className="fill-white" /> : <BsHeart />}
+            Show NSFW content
           </button>
-          <p className="mb-1">{howManyLikes}</p>
         </div>
-      </div>
-      <p className="text-xs text-zinc-400">{formattedDate}</p>
+      ) : (
+        <>
+          <div className="overflow-auto">
+            <p>{content}</p>
+          </div>
+          <div className="flex justify-between items-center mt-3">
+            <p className="text-xs ">{author}</p>
+            <div className="flex gap-2 items-center">
+              <button
+                onClick={() => {
+                  if (!user)
+                    return toast.error('You must be logged in to like a post');
+                  like.mutate(_id);
+                  setHowManyLikes(
+                    isLiked ? howManyLikes - 1 : howManyLikes + 1,
+                  );
+                  setIsLiked(!isLiked);
+                }}
+              >
+                {isLiked ? <BsHeartFill className="fill-white" /> : <BsHeart />}
+              </button>
+              <p className="mb-1">{howManyLikes}</p>
+            </div>
+          </div>
+          <p className="text-xs text-zinc-400">{formattedDate}</p>
+        </>
+      )}
     </article>
   );
 };

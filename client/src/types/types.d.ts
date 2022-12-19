@@ -6,6 +6,7 @@ export type SalinTempel = {
   likesBy: string[];
   totalLikes: number;
   createdAt: string;
+  isNSFW: boolean;
 };
 
 export type ResponseData = {

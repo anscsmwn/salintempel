@@ -27,6 +27,10 @@ const salinTempelSchema = new Schema(
       type: String,
       default: 'Anonymous',
     },
+    isNSFW: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

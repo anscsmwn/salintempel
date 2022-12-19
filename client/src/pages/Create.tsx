@@ -18,10 +18,12 @@ const Create = () => {
       title: string;
       content: string;
       author?: string;
+      isNSFW?: boolean;
     } = {
       title: formData.get('title') as string,
       content: formData.get('content') as string,
       author: formData.get('author') as string,
+      isNSFW: formData.get('isNSFW') === 'on' ? true : false,
     };
     if (data.author === '') {
       delete data.author;
@@ -83,6 +85,12 @@ const Create = () => {
               rows={5}
               className="input"
             />
+          </div>
+          <div className="mb-5 flex items-center gap-2">
+            <label htmlFor="isNSFW" className="label mb-0">
+              Is NSFW?
+            </label>
+            <input type="checkbox" name="isNSFW" id="isNSFW" />
           </div>
           <button className="bg-black text-white px-5 py-2 rounded-md">
             Create

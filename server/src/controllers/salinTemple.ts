@@ -18,6 +18,7 @@ export const createSalinTempel = async (req: Request, res: Response) => {
     }
 
     const result = await SalinTempel.create(req.body);
+
     res.status(201).json({
       status: 'success',
       end_point: req.originalUrl,
