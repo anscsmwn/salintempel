@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import { Toaster } from 'react-hot-toast';
 import Favorites from './pages/Favorites';
 import NavigationMenu from './components/NavigationMenu/NavigationMenu';
+import NotFound from './pages/NotFound';
 function App() {
   return (
     <>
@@ -18,6 +19,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/favorites" element={<Favorites />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
           {location.pathname !== '/login' &&
             location.pathname !== '/register' && <NavigationMenu />}
