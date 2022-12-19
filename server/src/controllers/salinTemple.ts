@@ -38,11 +38,12 @@ interface SortOptions {
 }
 export const getSalinTempels = async (req: Request, res: Response) => {
   // destructuring query params and set default value
-  const { offset = 0, limit = 20, sort = '', type = '' } = req.query;
+  const { offset = 0, limit = 2, sort = '', type = '' } = req.query;
   try {
     const sortOptions: SortOptions = {
       totalLikes: type === 'popular' ? -1 : 1,
       createdAt: sort === 'new' ? -1 : 1,
+_id: -1,
     };
 
     if (sort === '') {
