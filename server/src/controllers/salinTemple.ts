@@ -37,6 +37,7 @@ export const createSalinTempel = async (req: Request, res: Response) => {
 interface SortOptions {
   [key: string]: SortOrder;
 }
+
 export const getSalinTempels = async (req: Request, res: Response) => {
   // destructuring query params and set default value
   const { offset = 0, limit = 2, sort = 'new', type = '' } = req.query;
@@ -156,6 +157,32 @@ export const likeSalinTempel = async (req: Request, res: Response) => {
       end_point: req.originalUrl,
       method: req.method,
       message: 'Failed to like salin tempel.',
+    });
+  }
+};
+
+export const getMyFavoriteSalinTempels = async (
+  req: Request,
+  res: Response,
+) => {
+  try {
+    const { userId } = req.params;
+    const result = await SalinTempel.find({ likesBy: { $in: [userId] } });
+    const results = result.filter((salinTempel) =>
+      salinTempel.likesBy.includes(userId),
+    );
+    res.status(200).json({
+      status: 'success',
+      end_point: req.originalUrl,
+      method: req.method,
+      data: results,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      end_point: req.originalUrl,
+      method: req.method,
+      message: 'Failed to get my favorite salin tempels.',
     });
   }
 };

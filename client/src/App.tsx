@@ -5,6 +5,8 @@ import Login from './pages/Login';
 import { AuthContextProvider } from './context/authContext';
 import Register from './pages/Register';
 import { Toaster } from 'react-hot-toast';
+import Favorites from './pages/Favorites';
+import NavigationMenu from './components/NavigationMenu/NavigationMenu';
 function App() {
   return (
     <>
@@ -15,7 +17,10 @@ function App() {
             <Route path="/create" element={<Create />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/favorites" element={<Favorites />} />
           </Routes>
+          {location.pathname !== '/login' &&
+            location.pathname !== '/register' && <NavigationMenu />}
         </main>
       </AuthContextProvider>
       <Toaster />

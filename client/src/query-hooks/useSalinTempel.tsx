@@ -1,4 +1,9 @@
-import { useMutation, useQueryClient, useInfiniteQuery } from 'react-query';
+import {
+  useMutation,
+  useQueryClient,
+  useInfiniteQuery,
+  useQuery,
+} from 'react-query';
 import { UserAuth } from '../context/authContext';
 import { formattedParams } from '../lib/formatted';
 import { ResponseData, ResponseDataGetAll } from '../types/types';
@@ -111,6 +116,28 @@ export const useCreateSalinTempel = () => {
   return useMutation(createSalinTempel, {
     onSuccess: () => {
       queryClient.invalidateQueries('salin-tempel');
+    },
+  });
+};
+
+export const useGetMyFavorites = () => {
+  const { user } = UserAuth();
+  return useQuery({
+    queryKey: ['my-favorites'],
+    queryFn: async (): Promise<ResponseData> => {
+      if (!user?.email) {
+        return {
+          data: [],
+          end_point: 'api/salin-tempel/my-favorite',
+          method: 'GET',
+          status: 'error',
+          total: 0,
+          errors: ['You must login first'],
+        };
+      }
+      return await (
+        await fetch(`${baseURL}/api/salin-tempel/my-favorite/${user?.email}`)
+      ).json();
     },
   });
 };

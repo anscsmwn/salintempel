@@ -1,8 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
-import NavigationMenu from './NavigationMenu/NavigationMenu';
-
 interface LayoutProps {
   title: string;
   children: React.ReactNode;
@@ -18,9 +16,6 @@ const Layout = ({ title, children }: LayoutProps) => {
       <div className="px-5 bg-[#18181b] text-[#f7f7f6] min-h-screen">
         {children}
       </div>
-      {/* {location.pathname !== '/login' && location.pathname !== '/register' && (
-        <NavigationMenu />
-      )} */}
     </>
   );
 };
