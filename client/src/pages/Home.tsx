@@ -14,14 +14,18 @@ import { AiOutlineClockCircle, AiOutlineFire } from 'react-icons/ai';
 
 const Home = () => {
   const sort = useGetSalinTempelSort();
-  const [isSortNew, setIsSortNew] = React.useState<boolean>(false);
+  const [isSortNew, setIsSortNew] = React.useState<boolean>(true);
   const [isSortPopular, setIsSortPopular] = React.useState<boolean>(false);
+  const { data, isLoading, fetchNextPage, hasNextPage } = useGetSalinTempels(
+    isSortNew,
+    isSortPopular,
+  );
 
-  const { data, isLoading, fetchNextPage, hasNextPage } = useGetSalinTempels();
   if (isLoading)
     return (
       <AiOutlineLoading3Quarters className="animate-spin text-4xl mx-auto text-slate-800 text-center pt-10" />
     );
+
   return (
     <Layout title="Home">
       <Header />
@@ -35,7 +39,7 @@ const Home = () => {
               src="/confused-stickman.svg"
               alt="empty-state"
             />
-            <p className="text-sm text-gray-600 text-center mt-2">No data</p>
+            <p className="text-sm text-zinc-100 text-center mt-2">No data</p>
           </>
         </section>
       ) : (
@@ -66,7 +70,6 @@ const Home = () => {
               <p>Popular</p>
             </button>
           </div>
-
           <section className="mt-5 space-y-5">
             {data && (
               <InfiniteScroll
@@ -77,7 +80,7 @@ const Home = () => {
                 // @ts-ignore
                 hasMore={hasNextPage}
                 loader={
-                  <p className="text-center text-black text-sx py-4">
+                  <p className="text-center text-white text-sx py-4">
                     Loading...
                   </p>
                 }

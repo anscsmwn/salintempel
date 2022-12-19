@@ -1,5 +1,5 @@
 import { SalinTempel } from '../types/types';
-import { BsHeart, BsHeartFill } from 'react-icons/bs';
+import { BsHeart, BsHeartFill, BsTrash } from 'react-icons/bs';
 import toast from 'react-hot-toast';
 import { useEffect } from 'react';
 
@@ -42,21 +42,30 @@ const ItemSalinTempel = ({
     day: 'numeric',
   });
 
-  const key = search.get(import.meta.env.VITE_KEY!);
-
   return (
     <article key={_id} className="border border-[#f7f7f6] p-5 rounded-md">
       <div className="flex justify-between items-start gap-2 break-words">
         <h2 className="text-2xl font-semibold mb-4 w-11/12">{title}</h2>
-        <button
-          onClick={() => {
-            navigator.clipboard.writeText(content);
-            toast.success('Copied to clipboard');
-          }}
-          className="mt-2 w-1/12"
-        >
-          <IoCopyOutline />
-        </button>
+        {(author === user?.email ||
+          user?.email === import.meta.env.VITE_SUPER_ADMIN) && (
+          <div className="flex items-center gap-2 mt-2 w-1/12">
+            <button
+              onClick={() => {
+                remove.mutate(_id);
+              }}
+            >
+              <BsTrash />
+            </button>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(content);
+                toast.success('Copied to clipboard');
+              }}
+            >
+              <IoCopyOutline />
+            </button>
+          </div>
+        )}
       </div>
       <div className="overflow-auto">
         <p>{content}</p>
@@ -79,18 +88,6 @@ const ItemSalinTempel = ({
         </div>
       </div>
       <p className="text-xs text-zinc-400">{formattedDate}</p>
-      {(author === user?.email || key) && (
-        <div className="flex justify-end">
-          <button
-            onClick={() => {
-              remove.mutate(_id);
-            }}
-            className="bg-[#39252b] text-xs text-white px-2 py-1 rounded-md"
-          >
-            Delete
-          </button>
-        </div>
-      )}
     </article>
   );
 };
