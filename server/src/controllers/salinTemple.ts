@@ -42,8 +42,7 @@ export const getSalinTempels = async (req: Request, res: Response) => {
   try {
     const sortOptions: SortOptions = {
       totalLikes: type === 'popular' ? -1 : 1,
-      createdAt: sort === '' ? 1 : -1,
-      _id: -1,
+      createdAt: sort === 'new' ? -1 : 1,
     };
 
     // execute query with offset and limit values
