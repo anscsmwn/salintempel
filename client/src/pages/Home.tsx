@@ -70,38 +70,42 @@ const Home = () => {
               <p>Popular</p>
             </button>
           </div>
-          <section className="mt-5 space-y-5">
-            {data && (
-              <InfiniteScroll
-                dataLength={data.pages.length}
-                next={() => {
-                  fetchNextPage();
-                }}
-                // @ts-ignore
-                hasMore={hasNextPage}
-                loader={
-                  <p className="text-center text-white text-sx py-4">
-                    Loading...
-                  </p>
-                }
-                endMessage={
-                  <p className="py-5" style={{ textAlign: 'center' }}>
-                    <b>Yay! You have seen it all</b>
-                  </p>
-                }
-              >
-                <div className="space-y-5">
-                  {data?.pages.map((page, idx) => (
-                    <React.Fragment key={idx}>
-                      {page.data.map((item) => (
-                        <ItemSalinTempel key={item._id} {...item} />
-                      ))}
-                    </React.Fragment>
-                  ))}
-                </div>
-              </InfiniteScroll>
-            )}
-          </section>
+          {sort.isLoading ? (
+            <AiOutlineLoading3Quarters className="text-zinc-200 text-center text-4xl mx-auto mt-10 animate-spin" />
+          ) : (
+            <section className="mt-5 space-y-5">
+              {data && (
+                <InfiniteScroll
+                  dataLength={data.pages.length}
+                  next={() => {
+                    fetchNextPage();
+                  }}
+                  // @ts-ignore
+                  hasMore={hasNextPage}
+                  loader={
+                    <p className="text-center text-white text-sx py-4">
+                      Loading...
+                    </p>
+                  }
+                  endMessage={
+                    <p className="py-5" style={{ textAlign: 'center' }}>
+                      <b>Yay! You have seen it all</b>
+                    </p>
+                  }
+                >
+                  <div className="space-y-5">
+                    {data?.pages.map((page, idx) => (
+                      <React.Fragment key={idx}>
+                        {page.data.map((item) => (
+                          <ItemSalinTempel key={item._id} {...item} />
+                        ))}
+                      </React.Fragment>
+                    ))}
+                  </div>
+                </InfiniteScroll>
+              )}
+            </section>
+          )}
         </>
       )}
     </Layout>
