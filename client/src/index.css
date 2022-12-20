@@ -59,6 +59,7 @@ body {
   width: 100%;
   text-align: center;
   font-weight: 500;
+  top: 20px;
 }
 .navigation ul li a .icon {
   position: relative;

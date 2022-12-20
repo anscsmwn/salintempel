@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { FiHome } from 'react-icons/fi';
+import { MdOutlineFavoriteBorder } from 'react-icons/md';
+import { HiOutlineDocumentText } from 'react-icons/hi';
 
 const NavigationMenu = () => {
   const location = useLocation();
@@ -7,19 +10,19 @@ const NavigationMenu = () => {
     {
       name: 'Favorites',
       url: '/favorites',
-      icon: <ion-icon name="heart-outline" />,
+      icon: <MdOutlineFavoriteBorder />,
       dis: 'translate-x-[2rem]',
     },
     {
       name: 'Home',
       url: '/',
-      icon: <ion-icon name="home-outline" />,
+      icon: <FiHome />,
       dis: 'translate-x-[8.5rem]',
     },
     {
       name: 'SalinTempel',
       url: '/my-salintempel',
-      icon: <ion-icon name="document-text-outline" />,
+      icon: <HiOutlineDocumentText />,
       dis: 'translate-x-[15rem]',
     },
   ];
@@ -29,6 +32,7 @@ const NavigationMenu = () => {
       <ul>
         {Menus.map((menu, index) => (
           <li
+            key={index}
             className={`list
           ${location.pathname === menu.url ? 'active' : ''}
           `}
