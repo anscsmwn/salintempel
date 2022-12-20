@@ -40,7 +40,7 @@ interface SortOptions {
 
 export const getSalinTempels = async (req: Request, res: Response) => {
   // destructuring query params and set default value
-  const { offset = 0, limit = 2, sort = 'new', type = '' } = req.query;
+  const { offset = 0, limit = 10, sort = 'new', type = '' } = req.query;
   try {
     const sortOptions: SortOptions = {
       totalLikes: type === 'popular' ? -1 : 1,
