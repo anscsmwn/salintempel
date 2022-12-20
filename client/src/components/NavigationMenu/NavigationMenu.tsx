@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FiHome } from 'react-icons/fi';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
@@ -26,7 +25,6 @@ const NavigationMenu = () => {
       dis: 'translate-x-[15rem]',
     },
   ];
-  const [active, setActive] = useState('/');
   return (
     <div className="navigation">
       <ul>
