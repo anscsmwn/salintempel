@@ -1,13 +1,11 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useLocation } from 'react-router-dom';
 interface LayoutProps {
   title: string;
   children: React.ReactNode;
 }
 
 const Layout = ({ title, children }: LayoutProps) => {
-  const location = useLocation();
   return (
     <>
       <Helmet>

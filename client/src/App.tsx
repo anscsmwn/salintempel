@@ -14,7 +14,7 @@ function App() {
   return (
     <>
       <AuthContextProvider>
-        <main className="mx-auto max-w-md bg-white min-h-screen">
+        <main className="mx-auto max-w-md bg-[#18181b] min-h-screen">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/create" element={<Create />} />

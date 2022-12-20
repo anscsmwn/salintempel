@@ -23,7 +23,9 @@ const Home = () => {
 
   if (isLoading)
     return (
-      <AiOutlineLoading3Quarters className="animate-spin text-4xl mx-auto text-slate-800 text-center pt-10" />
+      <div className="pt-10">
+        <AiOutlineLoading3Quarters className="animate-spin text-4xl mx-auto text-white z-10" />
+      </div>
     );
 
   return (

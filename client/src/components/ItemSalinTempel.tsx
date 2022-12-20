@@ -78,9 +78,9 @@ const ItemSalinTempel = ({
       ) : (
         <>
           <div className="overflow-auto">
-            {/* check if content have new line if it has use pre tag if not use p tag */}
+            {/* check if content have new line if it has, then use pre tag if not use p tag */}
             {content.includes('\n') ? (
-              <p className="whitespace-pre">{content}</p>
+              <p className="whitespace-pre break-words">{content}</p>
             ) : (
               <p>{content}</p>
             )}
