@@ -45,9 +45,9 @@ const ItemSalinTempel = ({
     <article key={_id} className="border border-[#f7f7f6] p-5 rounded-md">
       <div className="flex justify-between items-start gap-2 break-words">
         <h2 className="text-2xl font-semibold mb-4 w-10/12">{title}</h2>
+<div className="flex items-center justify-end gap-2 mt-2 w-2/12">
         {(author === user?.email ||
-          user?.email === import.meta.env.VITE_SUPER_ADMIN) && (
-          <div className="flex items-center justify-end gap-2 mt-2 w-2/12">
+          user?.email === import.meta.env.VITE_SUPER_ADMIN) && (     
             <button
               onClick={() => {
                 remove.mutate(_id);
@@ -55,6 +55,7 @@ const ItemSalinTempel = ({
             >
               <BsTrash />
             </button>
+)}
             <button
               onClick={() => {
                 navigator.clipboard.writeText(content);
@@ -64,7 +65,6 @@ const ItemSalinTempel = ({
               <IoCopyOutline />
             </button>
           </div>
-        )}
       </div>
       {isNSFWContent ? (
         <div className="min-h-[15rem] flex justify-center items-center">
