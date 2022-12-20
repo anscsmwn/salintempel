@@ -1,6 +1,3 @@
-import { FiHome } from 'react-icons/fi';
-import { MdOutlineFavoriteBorder } from 'react-icons/md';
-import { HiOutlineDocumentText } from 'react-icons/hi';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -10,61 +7,41 @@ const NavigationMenu = () => {
     {
       name: 'Favorites',
       url: '/favorites',
-      icon: <MdOutlineFavoriteBorder />,
+      icon: <ion-icon name="heart-outline" />,
       dis: 'translate-x-[2rem]',
     },
-    { name: 'Home', url: '/', icon: <FiHome />, dis: 'translate-x-[8.5rem]' },
+    {
+      name: 'Home',
+      url: '/',
+      icon: <ion-icon name="home-outline" />,
+      dis: 'translate-x-[8.5rem]',
+    },
     {
       name: 'SalinTempel',
       url: '/my-salintempel',
-      icon: <HiOutlineDocumentText />,
+      icon: <ion-icon name="document-text-outline" />,
       dis: 'translate-x-[15rem]',
     },
   ];
   const [active, setActive] = useState('/');
   return (
-    <nav className="bg-black max-h-[4.4rem] px-14 rounded-t-xl fixed bottom-0 mx-auto w-full max-w-md bg-opacity-70 backdrop-blur-sm">
-      <div className="flex relative">
-        <ul className="flex items-center justify-center gap-10 w-full">
-          {Menus.map((menu, i) => (
-            <li key={i} className="w-16">
-              <Link
-                to={menu.url}
-                className="flex flex-col text-center pt-6 items-center"
-                onClick={() => setActive(menu.url)}
-              >
-                <span
-                  className={`
-                  ${
-                    menu.url === active &&
-                    `bg-white border-4 border-gray-900 duration-500 `
-                  }
-                  h-16 w-16 absolute -top-5 rounded-full`}
-                ></span>
-                <span
-                  className={`text-xl cursor-pointer duration-500 text-white ${
-                    active === menu.url
-                      ? '-mt-10 text-black z-10 scale-125'
-                      : ''
-                  } `}
-                >
-                  {menu.icon}
-                </span>
-                <p
-                  className={` ${
-                    active === menu.url
-                      ? 'translate-y-4 duration-700 opacity-100'
-                      : 'opacity-0 translate-y-10'
-                  } text-white text-sm font-semibold`}
-                >
-                  {menu.name}
-                </p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </nav>
+    <div className="navigation">
+      <ul>
+        {Menus.map((menu, index) => (
+          <li
+            className={`list
+          ${location.pathname === menu.url ? 'active' : ''}
+          `}
+          >
+            <Link to={menu.url}>
+              <span className="icon">{menu.icon}</span>
+              <span className="text">{menu.name}</span>
+            </Link>
+          </li>
+        ))}
+        <div className="indicator left-[]"></div>
+      </ul>
+    </div>
   );
 };
 
