@@ -141,3 +141,25 @@ export const useGetMyFavorites = () => {
     },
   });
 };
+
+export const useGetMySalinTempels = () => {
+  const { user } = UserAuth();
+  return useQuery({
+    queryKey: ['my-salin-tempels'],
+    queryFn: async (): Promise<ResponseData> => {
+      if (!user?.email) {
+        return {
+          data: [],
+          end_point: 'api/salin-tempel/my',
+          method: 'GET',
+          status: 'error',
+          total: 0,
+          errors: ['You must login first'],
+        };
+      }
+      return await (
+        await fetch(`${baseURL}/api/salin-tempel/my/${user?.email}`)
+      ).json();
+    },
+  });
+};

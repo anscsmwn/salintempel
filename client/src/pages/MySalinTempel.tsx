@@ -1,17 +1,12 @@
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import Header from '../components/Header';
 import ItemSalinTempel from '../components/ItemSalinTempel';
 import Layout from '../components/Layout';
-import { useGetMyFavorites } from '../query-hooks/useSalinTempel';
+import { useGetMySalinTempels } from '../query-hooks/useSalinTempel';
 
-const Favorites = () => {
-  const { data, isLoading } = useGetMyFavorites();
-  if (isLoading)
-    return (
-      <AiOutlineLoading3Quarters className="animate-spin text-4xl mx-auto text-slate-800 text-center pt-10" />
-    );
+const MySalinTempel = () => {
+  const { data, isLoading } = useGetMySalinTempels();
   return (
-    <Layout title="Favorites">
+    <Layout title="MySalinTempel">
       <Header />
       {data?.data.length === 0 && (
         <section>
@@ -24,7 +19,7 @@ const Favorites = () => {
               alt="empty-state"
             />
             <p className="text-sm text-zinc-100 text-center mt-2">
-              No data in favorites
+              No data in MySalinTempel
             </p>
           </>
         </section>
@@ -38,4 +33,4 @@ const Favorites = () => {
   );
 };
 
-export default Favorites;
+export default MySalinTempel;

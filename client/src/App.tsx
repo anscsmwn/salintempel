@@ -9,6 +9,7 @@ import Favorites from './pages/Favorites';
 import NavigationMenu from './components/NavigationMenu/NavigationMenu';
 import NotFound from './pages/NotFound';
 import RequireAuth from './routes/RequireAuth';
+import MySalinTempel from './pages/MySalinTempel';
 function App() {
   return (
     <>
@@ -22,6 +23,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
             <Route element={<RequireAuth />}>
               <Route path="/favorites" element={<Favorites />} />
+              <Route path="/my-salintempel" element={<MySalinTempel />} />
             </Route>
           </Routes>
           {location.pathname !== '/login' &&

@@ -43,7 +43,7 @@ const Create = () => {
       <Header />
       <section className="mt-10">
         <AlertError errors={errors} />
-        <form onSubmit={onSubmit} className="mt-5">
+        <form onSubmit={onSubmit} className="mt-5 pb-20">
           <div className="mb-5">
             <label htmlFor="author" className="mb-2 label">
               Author (Optional)

@@ -34,7 +34,7 @@ const Register = () => {
           </Link>
         </p>
         <AlertError errors={errors} />
-        <form onSubmit={handleSubmit} className="w-full">
+        <form onSubmit={handleSubmit} className="w-full pb-20">
           <div className="flex flex-col py-2">
             <label className="mb-2 label">Email Address</label>
             <input

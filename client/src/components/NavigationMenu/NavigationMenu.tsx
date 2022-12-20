@@ -10,19 +10,16 @@ const NavigationMenu = () => {
       name: 'Favorites',
       url: '/favorites',
       icon: <MdOutlineFavoriteBorder />,
-      dis: 'translate-x-[2rem]',
     },
     {
       name: 'Home',
       url: '/',
       icon: <FiHome />,
-      dis: 'translate-x-[8.5rem]',
     },
     {
       name: 'SalinTempel',
       url: '/my-salintempel',
       icon: <HiOutlineDocumentText />,
-      dis: 'translate-x-[15rem]',
     },
   ];
   return (
@@ -41,7 +38,11 @@ const NavigationMenu = () => {
             </Link>
           </li>
         ))}
-        <div className="indicator left-[]"></div>
+        {location.pathname !== '/create' &&
+          location.pathname !== '/login' &&
+          location.pathname !== '/register' && (
+            <div className="indicator"></div>
+          )}
       </ul>
     </div>
   );

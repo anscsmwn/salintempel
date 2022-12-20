@@ -186,3 +186,25 @@ export const getMyFavoriteSalinTempels = async (
     });
   }
 };
+
+export const getMySalinTempels = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const result = await SalinTempel.find({ author: userId })
+      .sort({ createdAt: -1 })
+      .exec();
+    res.status(200).json({
+      status: 'success',
+      end_point: req.originalUrl,
+      method: req.method,
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      end_point: req.originalUrl,
+      method: req.method,
+      message: 'Failed to get my salin tempels.',
+    });
+  }
+};

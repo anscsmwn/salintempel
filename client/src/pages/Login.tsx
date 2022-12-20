@@ -40,7 +40,7 @@ const Login = () => {
 
   return (
     <Layout title="Login">
-      <div className="flex items-center flex-col gap-5 justify-center pt-5">
+      <div className="flex items-center flex-col gap-5 justify-center pt-5 pb-20">
         <h1 className="text-4xl font-bold text-center">
           Sign in to your account
         </h1>
