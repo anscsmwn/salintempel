@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import AlertError from '../components/AlertError';
 import Select from 'react-select';
 import { Tag } from '../types/types';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 const Create = () => {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -171,7 +172,13 @@ const Create = () => {
               <input type="checkbox" name="isNSFW" id="isNSFW" />
             </div>
             <button className="bg-black text-white px-5 py-2 rounded-md">
-              Create
+              {add.isLoading ? (
+                <>
+                  <AiOutlineLoading3Quarters className="animate-spin text-2xl " />
+                </>
+              ) : (
+                'Create'
+              )}
             </button>
           </form>
         </section>

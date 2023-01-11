@@ -50,7 +50,11 @@ const ItemSalinTempel = ({
             user?.email === import.meta.env.VITE_SUPER_ADMIN) && (
             <button
               onClick={() => {
-                remove.mutate(_id);
+                remove.mutate(_id, {
+                  onSuccess: () => {
+                    toast.success('Deleted');
+                  },
+                });
               }}
             >
               <BsTrash />
