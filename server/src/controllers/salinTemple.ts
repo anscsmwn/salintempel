@@ -2,11 +2,24 @@ import { Request, Response } from 'express';
 import { SortOrder } from 'mongoose';
 import SalinTempel from '../model/salinTempel';
 import { validationResult } from 'express-validator';
+import Tag from '../model/tag';
 
 export const createSalinTempel = async (req: Request, res: Response) => {
   try {
     // check for validation errors
     const errors = validationResult(req);
+
+    // check in body tags if one of the element tag not exist in database
+    const tags = await Tag.find();
+    const tagsName = tags.map((tag) => tag.name);
+    const newTags = req.body.tags.filter(
+      (tag: string) => !tagsName.includes(tag),
+    );
+    // add new tags to database
+    const newTagsAdded = await Tag.insertMany(
+      newTags.map((tag: string) => ({ name: tag })),
+    );
+
     if (!errors.isEmpty()) {
       return res.status(400).json({
         status: 'fail',

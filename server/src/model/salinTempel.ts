@@ -31,6 +31,11 @@ const salinTempelSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    tags: {
+      type: Array,
+      of: String,
+      default: [],
+    },
   },
   {
     timestamps: true,

@@ -9,6 +9,11 @@ export type SalinTempel = {
   isNSFW: boolean;
 };
 
+export type Tag = {
+  name: string;
+  _id?: string;
+};
+
 export type ResponseData = {
   data: SalinTempel[];
   end_point: string;
@@ -27,4 +32,11 @@ export type ResponseDataGetAll = {
   next: string;
   previous: string;
   count: number;
+};
+
+export type ResponseDataTagGetAll = {
+  data: Tag[];
+  end_point: string;
+  method: string;
+  status: string;
 };

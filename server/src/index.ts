@@ -2,6 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import db from './connection/db';
 import salinTempelRoute from './routes/salinTemple';
+import tagRoute from './routes/tag';
 
 const PORT = 3000;
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.enable('trust proxy');
 app.use('/api/salin-tempel', salinTempelRoute);
+app.use('/api/salin-tempel-tag', tagRoute);
 
 app.get('/', (req, res) => {
   res.status(200).json({
