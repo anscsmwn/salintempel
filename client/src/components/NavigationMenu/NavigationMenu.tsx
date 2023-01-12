@@ -22,6 +22,7 @@ const NavigationMenu = () => {
       icon: <HiOutlineDocumentText />,
     },
   ];
+  console.log();
   return (
     <div className="navigation">
       <ul>
@@ -40,7 +41,8 @@ const NavigationMenu = () => {
         ))}
         {location.pathname !== '/create' &&
           location.pathname !== '/login' &&
-          location.pathname !== '/register' && (
+          location.pathname !== '/register' &&
+          !location.pathname.includes('/edit') && (
             <div className="indicator"></div>
           )}
       </ul>
