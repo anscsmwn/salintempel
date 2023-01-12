@@ -115,8 +115,13 @@ const ItemSalinTempel = ({
             <div className="mt-2 flex items-center gap-2">
               <AiFillTag />
               <div className="flex gap-2 items-center text-xs">
-                {tags.map((tag) => (
-                  <p>{tag}</p>
+                {tags.map((tag, index) => (
+                  <div key={index}>
+                    <p>
+                      {tag}
+                      {tags.length - 1 != index && <span>,</span>}
+                    </p>
+                  </div>
                 ))}
               </div>
             </div>
