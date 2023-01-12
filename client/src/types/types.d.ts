@@ -35,6 +35,17 @@ export type ResponseDataGetAll = {
   count: number;
 };
 
+export type ResponseDataGetById = {
+  data: SalinTempel;
+  end_point: string;
+  method: string;
+  status: string;
+  total: number;
+  next: string;
+  previous: string;
+  count: number;
+};
+
 export type ResponseDataTagGetAll = {
   data: Tag[];
   end_point: string;

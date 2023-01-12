@@ -6,7 +6,11 @@ import {
 } from 'react-query';
 import { UserAuth } from '../context/authContext';
 import { formattedParams } from '../lib/formatted';
-import { ResponseData, ResponseDataGetAll } from '../types/types';
+import {
+  ResponseData,
+  ResponseDataGetAll,
+  ResponseDataGetById,
+} from '../types/types';
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 
@@ -16,7 +20,7 @@ const getSalinTempels = async ({
   return await (await fetch(pageParam)).json();
 };
 
-const getSalintTempelsById = async (id: any) => {
+const getSalintTempelsById = async (id: any): Promise<ResponseDataGetById> => {
   return await (await fetch(`${baseURL}/api/salin-tempel/${id}`)).json();
 };
 

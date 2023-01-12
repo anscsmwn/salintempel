@@ -116,7 +116,13 @@ const Create = () => {
                 name="author"
                 id="author"
                 className="input"
-                defaultValue={user ? user.email! : ''}
+                defaultValue={
+                  queryEdit.data?.data.author
+                    ? queryEdit.data?.data.author
+                    : user
+                    ? user.email!
+                    : ''
+                }
               />
             </div>
             <div className="mb-5">
@@ -215,7 +221,13 @@ const Create = () => {
               <label htmlFor="isNSFW" className="label mb-0">
                 Is NSFW?
               </label>
-              <input type="checkbox" name="isNSFW" id="isNSFW" />
+              <input
+                type="checkbox"
+                name="isNSFW"
+                id="isNSFW"
+                className="accent-zinc-500"
+                defaultChecked={queryEdit.data?.data.isNSFW}
+              />
             </div>
             <button className="bg-black text-white px-5 py-2 rounded-md">
               {add.isLoading ? (
