@@ -19,7 +19,10 @@ const Header = () => {
         <div className="flex items-center gap-5">
           <button
             onClick={() => {
-              if (location.pathname === '/create') {
+              if (
+                location.pathname === '/create' ||
+                location.pathname.split('/')[1] === 'edit'
+              ) {
                 navigate('/');
               } else {
                 navigate('/create');
@@ -27,7 +30,8 @@ const Header = () => {
             }}
             className="btn-primary border-none"
           >
-            {location.pathname === '/create' ? (
+            {location.pathname === '/create' ||
+            location.pathname.split('/')[1] === 'edit' ? (
               <IoMdArrowRoundBack />
             ) : (
               <AiOutlinePlus />

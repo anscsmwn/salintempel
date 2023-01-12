@@ -24,6 +24,7 @@ function App() {
             <Route element={<RequireAuth />}>
               <Route path="/favorites" element={<Favorites />} />
               <Route path="/my-salintempel" element={<MySalinTempel />} />
+              <Route path="/edit/:id" element={<Create />} />
             </Route>
           </Routes>
           {location.pathname !== '/login' &&

@@ -16,6 +16,10 @@ const getSalinTempels = async ({
   return await (await fetch(pageParam)).json();
 };
 
+const getSalintTempelsById = async (id: any) => {
+  return await (await fetch(`${baseURL}/api/salin-tempel/${id}`)).json();
+};
+
 const createSalinTempel = async (data: {
   title: string;
   content: string;
@@ -24,6 +28,23 @@ const createSalinTempel = async (data: {
   return await (
     await fetch(`${baseURL}/api/salin-tempel`, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+  ).json();
+};
+
+const editSalinTempel = async (data: {
+  id: string;
+  title: string;
+  content: string;
+  author?: string;
+}): Promise<ResponseData> => {
+  return await (
+    await fetch(`${baseURL}/api/salin-tempel/${data.id}`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -58,6 +79,12 @@ export const useGetSalinTempels = (
             `${isSortNew ? '&sort=new' : '&sort='}`
         : undefined;
     },
+  });
+};
+
+export const useGetSalinTempelById = (id: string) => {
+  return useQuery(['salin-tempel', id], () => getSalintTempelsById(id), {
+    enabled: !!id,
   });
 };
 
@@ -114,6 +141,15 @@ export const useLikeSalinTempel = () => {
 export const useCreateSalinTempel = () => {
   const queryClient = useQueryClient();
   return useMutation(createSalinTempel, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('salin-tempel');
+    },
+  });
+};
+
+export const useEditSalinTempel = () => {
+  const queryClient = useQueryClient();
+  return useMutation(editSalinTempel, {
     onSuccess: () => {
       queryClient.invalidateQueries('salin-tempel');
     },

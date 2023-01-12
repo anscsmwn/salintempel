@@ -11,6 +11,8 @@ import { useState } from 'react';
 import { UserAuth } from '../context/authContext';
 import { IoCopyOutline } from 'react-icons/io5';
 import { AiFillTag } from 'react-icons/ai';
+import { BsPencil } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 
 const ItemSalinTempel = ({
   _id,
@@ -24,6 +26,7 @@ const ItemSalinTempel = ({
   tags,
 }: SalinTempel) => {
   const { user } = UserAuth();
+  const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState<boolean>(
     likesBy.includes(user?.email!),
   );
@@ -50,18 +53,28 @@ const ItemSalinTempel = ({
         <div className="flex items-center justify-end gap-2 mt-2 w-2/12">
           {(author === user?.email ||
             user?.email === import.meta.env.VITE_SUPER_ADMIN) && (
-            <button
-              onClick={() => {
-                remove.mutate(_id, {
-                  onSuccess: () => {
-                    toast.success('Deleted');
-                  },
-                });
-              }}
-            >
-              <BsTrash />
-            </button>
+            <>
+              <button
+                onClick={() => {
+                  remove.mutate(_id, {
+                    onSuccess: () => {
+                      toast.success('Deleted');
+                    },
+                  });
+                }}
+              >
+                <BsTrash />
+              </button>
+              <button
+                onClick={() => {
+                  navigate(`/edit/${_id}`);
+                }}
+              >
+                <BsPencil />
+              </button>
+            </>
           )}
+
           <button
             onClick={() => {
               navigator.clipboard.writeText(content);

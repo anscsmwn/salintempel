@@ -1,6 +1,10 @@
 import Layout from '../components/Layout';
-import { useNavigate } from 'react-router-dom';
-import { useCreateSalinTempel } from '../query-hooks/useSalinTempel';
+import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  useCreateSalinTempel,
+  useEditSalinTempel,
+  useGetSalinTempelById,
+} from '../query-hooks/useSalinTempel';
 import { useGetTags } from '../query-hooks/useTag';
 import { UserAuth } from '../context/authContext';
 import Header from '../components/Header';
@@ -11,14 +15,22 @@ import { Tag } from '../types/types';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 
 const Create = () => {
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const location = useLocation();
   const [errors, setErrors] = useState<string[]>([]);
+
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
   const [inputValue, setInputValue] = useState('');
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
   const { isLoading, data } = useGetTags();
   const [tagsOptions, setTagsOptions] = useState<Tag[]>([]);
   const { user } = UserAuth();
   const navigate = useNavigate();
   const add = useCreateSalinTempel();
+  const edit = useEditSalinTempel();
+  const queryEdit = useGetSalinTempelById(location.pathname.split('/')[2]);
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -35,9 +47,29 @@ const Create = () => {
       isNSFW: formData.get('isNSFW') === 'on' ? true : false,
       tags: selectedTags,
     };
+
     if (data.author === '') {
       delete data.author;
     }
+
+    if (location.pathname.split('/')[1] === 'edit') {
+      const editData = {
+        ...data,
+        id: location.pathname.split('/')[2],
+      };
+
+      edit.mutate(editData, {
+        onSuccess: (response) => {
+          if (response.status === 'fail') {
+            setErrors(response.errors);
+          } else {
+            navigate('/');
+          }
+        },
+      });
+      return;
+    }
+
     add.mutate(data, {
       onSuccess: (response) => {
         if (response.status === 'fail') {
@@ -52,6 +84,15 @@ const Create = () => {
     if (tagsOptions) setTagsOptions([...tagsOptions, { name: inputValue }]);
     setSelectedTags([...selectedTags, inputValue]);
   };
+
+  useEffect(() => {
+    if (queryEdit.data) {
+      setTitle(queryEdit.data.data.title);
+      setContent(queryEdit.data.data.content);
+      setSelectedTags(queryEdit.data.data.tags);
+    }
+  }, [queryEdit.data]);
+
   useEffect(() => {
     if (data) {
       setTagsOptions(data.data);
@@ -91,6 +132,10 @@ const Create = () => {
                 name="title"
                 id="title"
                 className="input"
+                defaultValue={title}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
               />
             </div>
             <div className="mb-5">
@@ -106,13 +151,14 @@ const Create = () => {
                 id="content"
                 rows={5}
                 className="input"
+                defaultValue={content}
+                onChange={(e) => {
+                  setContent(e.target.value);
+                }}
               />
             </div>
             <div className="mb-5">
-              <label
-                htmlFor="content"
-                className="mb-2 after:content-['*'] after:ml-0.5 after:text-red-500 label"
-              >
+              <label htmlFor="content" className="mb-2 label">
                 Tags
               </label>
               {tagsOptions.length > 0 && (
@@ -158,7 +204,7 @@ const Create = () => {
                   noOptionsMessage={() =>
                     `Press enter to create tag "${inputValue}"`
                   }
-                  value={selectedTags.map((tag) => {
+                  defaultValue={selectedTags.map((tag) => {
                     return { value: tag, label: tag };
                   })}
                   placeholder="Select tags"
@@ -177,7 +223,7 @@ const Create = () => {
                   <AiOutlineLoading3Quarters className="animate-spin text-2xl " />
                 </>
               ) : (
-                'Create'
+                `${queryEdit.data ? 'Edit' : 'Create'}`
               )}
             </button>
           </form>

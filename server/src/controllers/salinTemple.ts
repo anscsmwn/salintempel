@@ -100,6 +100,77 @@ export const getSalinTempels = async (req: Request, res: Response) => {
   }
 };
 
+export const getSalinTempelById = async (req: Request, res: Response) => {
+  try {
+    const result = await SalinTempel.findById(req.params.id);
+    if (!result) {
+      return res.status(404).json({
+        status: 'fail',
+        end_point: req.originalUrl,
+        method: req.method,
+        message: 'Salin tempel not found.',
+      });
+    }
+    res.status(200).json({
+      status: 'success',
+      end_point: req.originalUrl,
+      method: req.method,
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      end_point: req.originalUrl,
+      method: req.method,
+      message: 'Failed to get salin tempel.',
+    });
+  }
+};
+
+export const updateSalinTempelById = async (req: Request, res: Response) => {
+  try {
+    // check for validation errors
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        status: 'fail',
+        end_point: req.originalUrl,
+        method: req.method,
+        message: 'Failed to update salin tempel.',
+        errors: errors.array().map((error) => error.msg),
+      });
+    }
+
+    const result = await SalinTempel.findByIdAndUpdate(req.params.id, req.body)
+      .lean()
+      .exec();
+
+    if (!result) {
+      return res.status(404).json({
+        status: 'fail',
+        end_point: req.originalUrl,
+        method: req.method,
+        message: 'Salin tempel not found.',
+      });
+    }
+
+    res.status(200).json({
+      status: 'success',
+      end_point: req.originalUrl,
+      method: req.method,
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      end_point: req.originalUrl,
+      method: req.method,
+      message: 'Failed to update salin tempel.',
+    });
+  }
+};
+
 export const getRandomSalinTempel = async (req: Request, res: Response) => {
   const results = await SalinTempel.find();
   const random = Math.floor(Math.random() * results.length);

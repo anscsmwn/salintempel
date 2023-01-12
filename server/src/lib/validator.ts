@@ -3,7 +3,7 @@ import SalinTempel from '../model/salinTempel';
 
 export const createSalinTempeValidator = [
   check('title').not().isEmpty().withMessage('First name is required'),
-  check('content').not().isEmpty().withMessage('Last name is required'),
+  check('content').not().isEmpty().withMessage('Content is required'),
   // check if title is already taken
   check('title').custom(async (value) => {
     const salinTempel = await SalinTempel.findOne({ title: value });
