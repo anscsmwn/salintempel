@@ -7,6 +7,7 @@ export type SalinTempel = {
   totalLikes: number;
   createdAt: string;
   isNSFW: boolean;
+  tags: string[];
 };
 
 export type Tag = {

@@ -10,6 +10,7 @@ import {
 import { useState } from 'react';
 import { UserAuth } from '../context/authContext';
 import { IoCopyOutline } from 'react-icons/io5';
+import { AiFillTag } from 'react-icons/ai';
 
 const ItemSalinTempel = ({
   _id,
@@ -20,6 +21,7 @@ const ItemSalinTempel = ({
   createdAt,
   totalLikes,
   isNSFW,
+  tags,
 }: SalinTempel) => {
   const { user } = UserAuth();
   const [isLiked, setIsLiked] = useState<boolean>(
@@ -109,6 +111,16 @@ const ItemSalinTempel = ({
             </div>
           </div>
           <p className="text-xs text-zinc-400">{formattedDate}</p>
+          {tags.length > 0 && (
+            <div className="mt-2 flex items-center gap-2">
+              <AiFillTag />
+              <div className="flex gap-2 items-center text-xs">
+                {tags.map((tag) => (
+                  <p>{tag}</p>
+                ))}
+              </div>
+            </div>
+          )}
         </>
       )}
     </article>
